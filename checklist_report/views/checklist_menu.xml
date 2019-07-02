@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+         <record id="view_so_checklist_report_form" model="ir.ui.view">
+            <field name="name">SO Checklist</field>
+            <field name="model">so.checklist</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	            <form string="SO Checklist">
+	                <header>
+
+                        <button name="validate" type="object" string="Validate" class="oe_highlight" attrs="{'invisible': [('state','in',('validate','cancel') )]}"/>
+                        <button name="cancel" type="object"   string="Cancel"  attrs="{'invisible': [('state','=','cancel')]}"/>
+                        <button name="reset_to_draft" type="object" string="Reset To Draft" attrs="{'invisible': [('state','!=', 'cancel' )]}" />
+
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,cancel,validate"/>
+                    </header>
+
+                    <sheet>
+
+                   <group colspan="4">
+                    <group >
+                        <field name="sale_order_id" domain="[('state','=','sale')]"/>
+                        <field name="so_date"/>
+                         <field name="so_partner"/>
+                        <field name="eta"/>
+                        <field name="free_time"/>
+                    </group >
+                       <group >
+                        <field name="bl_status"/>
+                         <field name="do"/>
+                         <field name="demmurage"/>
+                         <field name="job_type"/>
+                         <field name="bl_number"/>
+                         <field name="container_no"/>
+                    </group>
+                   </group>
+                      <group >
+                           <h4>Available Documents</h4>
+
+                           <field name="invoice_doc" widget="radio" options="{'horizontal': true}"/>
+                            <field name="pack_list_doc" widget="radio" options="{'horizontal': true}"/>
+                            <field name="certificate_origin_doc" widget="radio" options="{'horizontal': true}"/>
+                            <field name="bl_awb_doc" widget="radio" options="{'horizontal': true}"/>
+                            <field name="phyto_certificate_doc" widget="radio" options="{'horizontal': true}"/>
+                            <field name="health_certificate_doc" widget="radio" options="{'horizontal': true}"/>
+
+                        </group>
+                    </sheet>
+	            </form>
+            </field>
+        </record>
+
+          <record model="ir.ui.view" id="view_so_checklist_report_tree">
+            <field name="name">SO Checklist Tree</field>
+            <field name="model">so.checklist</field>
+            <field name="arch" type="xml">
+                <tree string="SO Checklist">
+                    <field name="sale_order_id"/>
+                     <field name="so_partner"/>
+                     <field name="bl_number"/>
+                     <field name="container_no"/>
+                     <field name="so_date"/>
+                     <field name="do"/>
+
+
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_so_checklist_report_form" model="ir.actions.act_window">
+            <field name="name">SO Checklist Report</field>
+            <field name="res_model">so.checklist</field>
+<!--            <field name="view_id" ref="view_so_checklist_report_form"/>-->
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+
+
+    </data>
+</odoo>

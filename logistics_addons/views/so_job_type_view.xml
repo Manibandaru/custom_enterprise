@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+         <record id="view_so_job_type_form" model="ir.ui.view">
+            <field name="name">SO Job Type</field>
+            <field name="model">so.job.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	            <form string="SO Job Type">
+
+                    <sheet>
+
+                   <group colspan="4">
+                    <group >
+                        <field name="name" />
+                    </group >
+                       <group >
+                        <field name="code"/>
+                    </group>
+                   </group>
+                    </sheet>
+	            </form>
+            </field>
+        </record>
+
+          <record model="ir.ui.view" id="view_so_job_type_tree">
+            <field name="name">SO Job Type tree</field>
+            <field name="model">so.job.type</field>
+            <field name="arch" type="xml">
+                <tree string="SO Job Type">
+                    <field name="name"/>
+                     <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_so_job_type_form" model="ir.actions.act_window">
+            <field name="name">SO Job Type</field>
+            <field name="res_model">so.job.type</field>
+<!--            <field name="view_id" ref="view_so_checklist_report_form"/>-->
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+
+
+        <menuitem id="menu_so_job_type_view"
+            name="SO Job Types"
+            parent="sale.sale_order_menu"
+            groups="sales_team.group_sale_manager"
+            action="action_so_job_type_form"
+            />
+
+
+    </data>
+</odoo>

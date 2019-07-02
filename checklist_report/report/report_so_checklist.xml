@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<report
+   id="action_so_checklist_pdf"
+   string="SO Checklist"
+   model="so.checklist"
+   report_type="qweb-pdf"
+
+   file="checklist_report.report_so_checklist_template"
+   name="checklist_report.report_so_checklist_template"
+
+/>
+
+
+    <template id="report_so_checklist_template">
+        <t t-call="web.html_container">
+<!--        <t t-set="data_report_margin_top" t-value="0" />-->
+<!--        <t t-set="data_report_header_spacing" t-value="0" />-->
+        <t t-set="data_report_dpi" t-value="90" />
+        <t t-foreach="docs" t-as="o">
+        <t t-call="web.html_container">
+
+
+
+<!--        <t t-call="web.html_container">-->
+       <t t-foreach="docs" t-as="o">
+           <t t-call="web.external_layout">
+               <div class="page">
+                   <br/>
+                   <br/>
+                   <h2><strong>JOB CHECKLIST </strong></h2>
+
+
+                   <table class="table table-bordered" width="100%">
+<!--                 <thead >-->
+<!--                     <th style="border: 1px solid black;" ></th>-->
+<!--                     <th style="border: 1px solid black;" ></th>-->
+<!--                 </thead>-->
+                 <tbody>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;" ><strong> ETA </strong></td>
+                         <td   style="text-align:left;width:50%;"> <t t-esc="o.eta" /></td>
+                          <td style="text-align:center;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>FREE TIME</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.free_time" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>BL STATUS</strong></td>
+                         <td style="text-align:left;width:50%;"> <t  t-esc="o.bl_status" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                      <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>DO</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.do" /></td>
+                          <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>DEMMURAGE</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.demmurage" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                      <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>DATE</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.so_date" /></td>
+                           <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>JOB NUMBER</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.sale_order_id.name" /></td>
+                          <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>CLIENT NAME</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.so_partner.name" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>JOB TYPE</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.sale_order_id.job_type" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                      <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>B/L NUMBER</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.bl_number" /></td>
+                          <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>CONTAINER NUMBER</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.container_no" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                   </tbody>
+                   </table>
+
+
+                       <h3><td  ><strong>AVAILABLE DOCS</strong></td></h3>
+
+
+
+                   <table class="table table-bordered" width="100%">
+                   <tbody>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;" >Invoice</td>
+                         <td  style="text-align:left;width:50%;"> <t  t-esc="o.invoice_doc"/></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                      <tr >
+
+                         <td style="text-align:left;width:30%;">Packing List</td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.pack_list_doc" /></td>
+                           <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;">Certificaate Of Origin</td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.certificate_origin_doc" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                    <tr >
+
+                         <td style="text-align:left;width:30%;">BL/AWB</td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.bl_awb_doc" /></td>
+                        <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                    <tr >
+
+                         <td style="text-align:left;width:30%;">Phyto Certificate</td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.phyto_certificate_doc" /></td>
+                        <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                    <tr >
+
+                         <td style="text-align:left;width:30%;">Health Certificate</td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.health_certificate_doc" /></td>
+                        <td style="text-align:left;width:20%;"></td>
+                     </tr>
+
+                   </tbody>
+                   </table>
+
+
+
+
+
+
+               </div>
+           </t>
+       </t>
+   </t>
+        </t>
+        </t>
+
+    </template>
+
+</odoo>

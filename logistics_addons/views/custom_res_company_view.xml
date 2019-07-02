@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<record id="custom_res_company_view_code" model="ir.ui.view">
+        <field name="name">custom.res.company.view.code</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="short_code" />
+                <field name="logistic_company"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
