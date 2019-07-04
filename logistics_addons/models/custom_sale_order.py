@@ -27,7 +27,9 @@ class SaleOrder(models.Model):
 				if vals['job_type']:
 					job_type = self.env['so.job.type'].search([('id', '=', vals['job_type'])])
 					job_code =  job_type.code
-				vals['name'] = company_code + '/' + job_code + '/' + vals['name']
+					vals['name'] = company_code + '/' + job_code + '/' + vals['name']
+				else:
+					vals['name'] = company_code + '/' + vals['name']
 
 		# Makes sure partner_invoice_id', 'partner_shipping_id' and 'pricelist_id' are defined
 		if any(f not in vals for f in ['partner_invoice_id', 'partner_shipping_id', 'pricelist_id']):
