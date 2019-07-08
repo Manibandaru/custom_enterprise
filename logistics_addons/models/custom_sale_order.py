@@ -1,6 +1,6 @@
 
 from odoo import fields, models,api,_
-
+from odoo.fields import Date
 
 class SaleOrder(models.Model):
 	_inherit = "sale.order"
@@ -63,6 +63,25 @@ class SaleOrder(models.Model):
 
 		return action
 
+	@api.multi
+	def create_purchase_invoice(self):
+		inv_vals = {
+			'job_number': self.id,
+			'name': self.client_order_ref or '',
+			'date_invoice': fields.Date.today(),
+
+			'type': 'in_invoice',
+			'company_id': self.company_id.id,
+			'user_id': self.user_id and self.user_id.id,
+		}
+		inv_obj = self.env['account.invoice']
+		invoice = inv_obj.create(inv_vals)
+		print(invoice.id)
+		return self.action_view_purchase_invoice()
+	# 	if self._context.get('open_invoices', False):
+	# 		return sale_orders.action_view_invoice()
+	# 	return {'type': 'ir.actions.act_window_close'}
+	#
 
 class JobType_so(models.Model):
 	_name = 'so.job.type'

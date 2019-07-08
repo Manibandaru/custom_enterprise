@@ -19,6 +19,10 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="job_type" />
             </xpath>
+
+            <xpath expr="//button[@name='action_unlock']" position="after">
+                <button name="create_purchase_invoice" type="object" string="CREATE VENDOR BILL" states="sale"/>
+            </xpath>
         </field>
     </record>
 
