@@ -9,7 +9,7 @@
     """,
 
     'summary': 'This module helps to do checklist on the each job assigned',
-    'depends': ['base', 'sale'],
+    'depends': ['base', 'sale','logistics_addons'],
 
     'data': [
         'security/ir.model.access.csv',

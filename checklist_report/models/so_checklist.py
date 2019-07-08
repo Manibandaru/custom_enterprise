@@ -18,7 +18,7 @@ class so_checklist(models.Model):
 
     so_date = fields.Datetime('SO Date')
     so_partner = fields.Many2one('res.partner')
-    job_type = fields.Char('Job Type')
+    job_type = fields.Many2one('so.job.type','Job Type')
     bl_number = fields.Char('B/L Number')
     container_no = fields.Char('Container Number')
     state = fields.Selection([ ('draft','Draft'),('cancel','Canceled'),('validate','Validated')     ],default='draft')
@@ -35,9 +35,15 @@ class so_checklist(models.Model):
     @api.onchange('sale_order_id')
     def onchage_sale_order(self):
         for record in self:
+            record.so_date = []
+            record.so_partner = []
+            record.job_type = []
+
             if record.sale_order_id:
                 record.so_date = record.sale_order_id.confirmation_date
                 record.so_partner =record.sale_order_id.partner_id
+                if record.sale_order_id.job_type:
+                    record.job_type = record.sale_order_id.job_type.id
 
     @api.multi
     def cancel(self):
