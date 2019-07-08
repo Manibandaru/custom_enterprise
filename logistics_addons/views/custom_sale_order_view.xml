@@ -8,10 +8,33 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
+            <xpath expr="//button[@name='action_view_invoice']" position="after">
 
+                <button name="action_view_purchase_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o" string="Purchase Invoices"/>
+
+            </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="job_type" />
             </xpath>
         </field>
     </record>
+
+<!--    invoice_supplier_form-->
+
+    <record id="vendor_bill_job_number_reference_view" model="ir.ui.view">
+        <field name="name">vendor.bill.job.number.reference.view</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='reference']" position="before">
+                <field name="job_number" />
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

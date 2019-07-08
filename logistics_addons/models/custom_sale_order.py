@@ -53,6 +53,16 @@ class SaleOrder(models.Model):
 
 		return result
 
+	@api.multi
+	def action_view_purchase_invoice(self):
+		#invoices = self.env['account.invoice']
+		action = self.env.ref('account.action_vendor_bill_template').read()[0]
+
+		action['domain'] = [('job_number', '=', self.id)]
+
+
+		return action
+
 
 class JobType_so(models.Model):
 	_name = 'so.job.type'
