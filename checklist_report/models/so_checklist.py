@@ -12,9 +12,9 @@ class so_checklist(models.Model):
     sale_order_id = fields.Many2one('sale.order',string='JOB Number')
     eta = fields.Date('ETA')
     free_time = fields.Integer('Free Time')
-    bl_status=fields.Selection([('original','Original'),('surrender','Surrender')])
-    do = fields.Integer('DO')
-    demmurage = fields.Integer('Demmurage')
+    bl_status=fields.Selection([('Original','Original'),('Surrender','Surrender')])
+    do = fields.Float('DO Amount')
+    demmurage = fields.Float('Demmurage Amount')
 
     so_date = fields.Datetime('SO Date')
     so_partner = fields.Many2one('res.partner')
@@ -23,12 +23,12 @@ class so_checklist(models.Model):
     container_no = fields.Char('Container Number')
     state = fields.Selection([ ('draft','Draft'),('cancel','Canceled'),('validate','Validated')     ],default='draft')
 
-    invoice_doc =fields.Selection([('orginal','Original'),('copy','Copy')   ],string='Invoice')
-    pack_list_doc =fields.Selection([('orginal','Original'),('copy','Copy')    ],string='Packing List')
-    certificate_origin_doc =fields.Selection([('orginal','Original'),('copy','Copy')    ],string='Certificate of Origin')
-    bl_awb_doc =fields.Selection([('orginal','Original'),('copy','Copy')    ],string='BL/AWB')
-    phyto_certificate_doc =fields.Selection([('orginal','Original'),('copy','Copy')    ],string='Phyto Certificate')
-    health_certificate_doc =fields.Selection([('orginal','Original'),('copy','Copy')    ],string='Health Certificate')
+    invoice_doc =fields.Selection([('Orginal','Original'),('Copy','Copy')   ],string='Invoice')
+    pack_list_doc =fields.Selection([('Orginal','Original'),('Copy','Copy')    ],string='Packing List')
+    certificate_origin_doc =fields.Selection([('Orginal','Original'),('Copy','Copy')    ],string='Certificate of Origin')
+    bl_awb_doc =fields.Selection([('Orginal','Original'),('Copy','Copy')    ],string='BL/AWB')
+    phyto_certificate_doc =fields.Selection([('Orginal','Original'),('Copy','Copy')    ],string='Phyto Certificate')
+    health_certificate_doc =fields.Selection([('Orginal','Original'),('Copy','Copy')    ],string='Health Certificate')
 
 
     @api.multi

@@ -4,7 +4,7 @@
 
 <report
    id="action_so_checklist_pdf"
-   string="SO Checklist"
+   string="JOB Checklist"
    model="so.checklist"
    report_type="qweb-pdf"
 
@@ -36,6 +36,45 @@
                  <tbody>
                      <tr >
 
+                         <td style="text-align:left;width:30%;"><strong>DATE</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.so_date"  /></td>
+                           <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>JOB NUMBER</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.sale_order_id.name" /></td>
+                          <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                      <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>JOB TYPE</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.sale_order_id.job_type.name" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                      <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>CUSTOMER NAME</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.so_partner.name" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+
+                      <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>B/L NUMBER</strong></td>
+                         <td style="text-align:left;width:50%;"> <t t-esc="o.bl_number" /></td>
+                          <td style="text-align:left;width:20%;"></td>
+                     </tr>
+                     <tr >
+
+                         <td style="text-align:left;width:30%;"><strong>CONTAINER NUMBER</strong></td>
+                         <td  style="text-align:left;width:50%;"> <t t-esc="o.container_no" /></td>
+                         <td style="text-align:left;width:20%;"></td>
+                     </tr>
+
+
+                     <tr >
+
                          <td style="text-align:left;width:30%;" ><strong> ETA </strong></td>
                          <td   style="text-align:left;width:50%;"> <t t-esc="o.eta" /></td>
                           <td style="text-align:center;width:20%;"></td>
@@ -54,52 +93,21 @@
                      </tr>
                       <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>DO</strong></td>
+                         <td style="text-align:left;width:30%;"><strong>DO Amount</strong></td>
                          <td style="text-align:left;width:50%;"> <t t-esc="o.do" /></td>
                           <td style="text-align:left;width:20%;"></td>
                      </tr>
                      <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>DEMMURAGE</strong></td>
+                         <td style="text-align:left;width:30%;"><strong>DEMMURAGE Amount</strong></td>
                          <td  style="text-align:left;width:50%;"> <t t-esc="o.demmurage" /></td>
                          <td style="text-align:left;width:20%;"></td>
                      </tr>
-                      <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>DATE</strong></td>
-                         <td style="text-align:left;width:50%;"> <t t-esc="o.so_date" /></td>
-                           <td style="text-align:left;width:20%;"></td>
-                     </tr>
-                     <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>JOB NUMBER</strong></td>
-                         <td  style="text-align:left;width:50%;"> <t t-esc="o.sale_order_id.name" /></td>
-                          <td style="text-align:left;width:20%;"></td>
-                     </tr>
-                     <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>CLIENT NAME</strong></td>
-                         <td style="text-align:left;width:50%;"> <t t-esc="o.so_partner.name" /></td>
-                         <td style="text-align:left;width:20%;"></td>
-                     </tr>
-                     <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>JOB TYPE</strong></td>
-                         <td  style="text-align:left;width:50%;"> <t t-esc="o.sale_order_id.job_type.name" /></td>
-                         <td style="text-align:left;width:20%;"></td>
-                     </tr>
-                      <tr >
 
-                         <td style="text-align:left;width:30%;"><strong>B/L NUMBER</strong></td>
-                         <td style="text-align:left;width:50%;"> <t t-esc="o.bl_number" /></td>
-                          <td style="text-align:left;width:20%;"></td>
-                     </tr>
-                     <tr >
-
-                         <td style="text-align:left;width:30%;"><strong>CONTAINER NUMBER</strong></td>
-                         <td  style="text-align:left;width:50%;"> <t t-esc="o.container_no" /></td>
-                         <td style="text-align:left;width:20%;"></td>
-                     </tr>
                    </tbody>
                    </table>
 

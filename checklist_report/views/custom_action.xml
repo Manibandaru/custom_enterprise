@@ -4,7 +4,7 @@
 
 
         <menuitem id="report_checklist_so"
-            name="SO Checklist"
+            name="JOB Checklist"
             parent="sale.sale_order_menu"
             groups="sales_team.group_sale_manager"
             action="action_so_checklist_report_form"
