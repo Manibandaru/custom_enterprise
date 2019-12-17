@@ -2,7 +2,7 @@
 <odoo>
 
 	<template id="report_view_account_stamt">
-		<t t-call="web.external_layout">
+<!--		<t t-call="web.external_layout">-->
 		<t t-foreach="docs" t-as="o">
 		<div class="page">
 
@@ -80,7 +80,7 @@
             </div>
         </div>
 		</t>
-		</t>
+<!--		</t>-->
 	</template>
 
 <template id="acc_statemnt_view">
