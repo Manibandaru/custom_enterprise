@@ -7,8 +7,8 @@
 		<div class="page">
 
 
-			<div class="row">
-                <div class="col-xs-5 col-xs-offset-7">
+			<div >
+                <div >
                     <span t-field="o.name"/><br/>
                     <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
                     <span t-field="o.vat"/>
@@ -25,12 +25,12 @@
                         <thead>
                             <tr>
                                 <th>Reference number</th>
-                                <th class="text-center">Date</th>
-                                <th class="text-center">Due Date</th>
+                                <th >Date</th>
+                                <th >Due Date</th>
                                 <th>Communication</th>
-                                <th class="text-right">Due</th>
-                                <th class="text-right">Paid</th>
-                                <th class="text-center">Litigation</th>
+                                <th >Due</th>
+                                <th >Paid</th>
+                                <th >Litigation</th>
                             </tr>
                         </thead>
                         <tr t-foreach="Lines[o.id][currency]" t-as="line">
@@ -47,28 +47,28 @@
                                 <t t-if="line['name'] != '/'"><span t-esc="line['name']"/></t>
                                 <span t-esc="line['ref']"/>
                             </td>
-                            <td class="text-right">
+                            <td >
                                 <span t-esc="line['debit']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
-                            <td class="text-right">
+                            <td >
                                 <span t-esc="line['credit']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
-                            <td class="text-center">
+                            <td >
                                 <span t-if="line['blocked']">x</span>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td><strong>Subtotal :</strong></td>
-                            <td class="text-right"><span t-esc="Totals[o.id][currency]['due']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
-                            <td class="text-right"><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
-                            <td class="text-right"><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+                            <td ><span t-esc="Totals[o.id][currency]['due']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+                            <td><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+                            <td ><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td><strong>Balance :</strong></td>
-                            <td class="text-right">
+                            <td >
                                 <span t-esc="Totals[o.id][currency]['due'] - Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
                         </tr>
