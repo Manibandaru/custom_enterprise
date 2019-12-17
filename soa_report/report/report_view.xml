@@ -12,9 +12,9 @@
         <field name="margin_bottom">15</field>
         <field name="margin_left">5</field>
         <field name="margin_right">5</field>
-        <field name="header_line" eval="False"/>
-        <field name="header_spacing">9</field>
-        <field name="dpi">110</field>
+        <field name="header_line" eval="True"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
     </record>
 <report
             id="action_cus_sup_report"

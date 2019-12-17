@@ -2,13 +2,12 @@
 <odoo>
 
 	<template id="report_view_account_stamt">
-<!--		<t t-call="web.external_layout">-->
-		<t t-foreach="docs" t-as="o">
+		<t t-call="web.external_layout">
+		<t t-set="data_report_dpi" t-value="90"/>
+            <t t-foreach="docs" t-as="o">
 		<div class="page">
-
-
-			<div >
-                <div >
+			<div class="row">
+                <div class="col-xs-5 col-xs-offset-7">
                     <span t-field="o.name"/><br/>
                     <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
                     <span t-field="o.vat"/>
@@ -21,7 +20,7 @@
 
                 <t t-if="Lines[o.id]">
 <!--                    <span t-field="res_company.with_context(lang=o.lang).overdue_msg"/>-->
-                    <table class="table table-condensed" t-foreach="Lines[o.id]" t-as="currency">
+                    <table class="table table-bordered" t-foreach="Lines[o.id]" t-as="currency">
                         <thead>
                             <tr>
                                 <th>Reference number</th>
@@ -47,28 +46,28 @@
                                 <t t-if="line['name'] != '/'"><span t-esc="line['name']"/></t>
                                 <span t-esc="line['ref']"/>
                             </td>
-                            <td >
+                            <td style="text-align:right">
                                 <span t-esc="line['debit']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
-                            <td >
+                            <td style="text-align:right">
                                 <span t-esc="line['credit']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
-                            <td >
+                            <td style="text-align:right">
                                 <span t-if="line['blocked']">x</span>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td><strong>Subtotal :</strong></td>
-                            <td ><span t-esc="Totals[o.id][currency]['due']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
-                            <td><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
-                            <td ><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['due']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td><strong>Balance :</strong></td>
-                            <td >
+                            <td style="text-align:right">
                                 <span t-esc="Totals[o.id][currency]['due'] - Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
                         </tr>
@@ -80,7 +79,7 @@
             </div>
         </div>
 		</t>
-<!--		</t>-->
+		</t>
 	</template>
 
 <template id="acc_statemnt_view">
