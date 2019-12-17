@@ -17,6 +17,7 @@
                     Date: <span t-esc="Date"/><br/>
                     <t t-if="o.ref">Customer ref: <span t-field="o.ref"/></t>
                 </p>
+            </div>
 
                 <t t-if="Lines[o.id]">
 <!--                    <span t-field="res_company.with_context(lang=o.lang).overdue_msg"/>-->
@@ -76,7 +77,7 @@
                 <p t-if="not Lines[o.id]">
                     <strong>There is nothing due with this customer.</strong>
                 </p>
-            </div>
+
         </div>
 		</t>
 		</t>
