@@ -6,18 +6,19 @@
 		<t t-set="data_report_dpi" t-value="90"/>
             <t t-foreach="docs" t-as="o">
 		<div class="page">
-			<div class="row">
-                <div class="col-xs-5 col-xs-offset-7">
-                    <span t-field="o.name"/><br/>
+			<div text-align="center">
+                    <strong><h3> STATEMENT OF ACCOUNT<br/></h3></strong>
+                    <span t-esc="Date"/><br/>
+            </div>
+
+            <div class="row">
+                <div >
+                   <strong> <span t-field="o.name"/><br/></strong>
                     <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
                     <span t-field="o.vat"/>
                 </div>
-                <p>
-                    Document: STATEMENT OF ACCOUNT<br/>
-                    Date: <span t-esc="Date"/><br/>
-                    <t t-if="o.ref">Customer ref: <span t-field="o.ref"/></t>
-                </p>
             </div>
+
 
                 <t t-if="Lines[o.id]">
 <!--                    <span t-field="res_company.with_context(lang=o.lang).overdue_msg"/>-->
@@ -30,7 +31,7 @@
                                 <th>Communication</th>
                                 <th >Due</th>
                                 <th >Paid</th>
-                                <th >Litigation</th>
+<!--                                <th >Litigation</th>-->
                             </tr>
                         </thead>
                         <tr t-foreach="Lines[o.id][currency]" t-as="line">
@@ -53,9 +54,9 @@
                             <td style="text-align:right">
                                 <span t-esc="line['credit']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
-                            <td style="text-align:right">
-                                <span t-if="line['blocked']">x</span>
-                            </td>
+<!--                            <td style="text-align:right">-->
+<!--                                <span t-if="line['blocked']">x</span>-->
+<!--                            </td>-->
                         </tr>
                         <tr>
                             <td colspan="3"></td>
