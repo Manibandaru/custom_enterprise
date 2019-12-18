@@ -34,6 +34,7 @@
                                 <th>Reference number</th>
                                 <th >Date</th>
                                 <th >Due Date</th>
+                                <th >Job Number</th>
                                 <th>Communication</th>
                                 <th >Due</th>
                                 <th >Paid</th>
@@ -49,6 +50,9 @@
                             </td>
                             <td>
                                 <span t-esc="line['date_maturity']"/>
+                            </td>
+                            <td >
+                                <span t-esc="line['origin']"/>
                             </td>
                             <td>
                                 <t t-if="line['name'] != '/'"><span t-esc="line['name']"/></t>
