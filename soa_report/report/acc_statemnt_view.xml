@@ -10,7 +10,7 @@
             <br/>
             <br/>
 
-			<div text-align="center">
+			<div style="text-align:center">
                     <strong><h3> STATEMENT OF ACCOUNT<br/></h3></strong>
 
             </div>
@@ -48,8 +48,11 @@
                             <td>
                                 <span t-esc="line['date']"/>
                             </td>
-                            <td>
-                                <span t-esc="line['date_maturity']"/>
+                            <td t-if="line['date_maturity'] &lt; Date">
+                                <span style="color:red"   t-esc="line['date_maturity']"/>
+                            </td>
+                            <td t-if="line['date_maturity'] &gt; Date">
+                                <span style="color:black"   t-esc="line['date_maturity']"/>
                             </td>
                             <td >
                                 <span t-esc="line['origin']"/>
@@ -69,15 +72,15 @@
 <!--                            </td>-->
                         </tr>
                         <tr>
-                            <td colspan="3"></td>
+                            <td colspan="4"></td>
                             <td><strong>Subtotal :</strong></td>
                             <td style="text-align:right"><span t-esc="Totals[o.id][currency]['due']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                             <td style="text-align:right"><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
-                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
+<!--                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>-->
                             <td></td>
                         </tr>
                         <tr>
-                            <td colspan="3"></td>
+                            <td colspan="4"></td>
                             <td><strong>Balance :</strong></td>
                             <td style="text-align:right">
                                 <span t-esc="Totals[o.id][currency]['due'] - Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
