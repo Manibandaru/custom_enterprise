@@ -28,14 +28,14 @@ class ReportOverdue(models.AbstractModel):
             "WHERE l.partner_id IN %s AND at.type IN ('receivable', 'payable') AND l.full_reconcile_id IS NULL GROUP BY l.date, l.name, l.ref, l.date_maturity, l.partner_id, at.type, l.blocked, l.amount_currency, l.currency_id, l.move_id, m.name,ai.origin", (((fields.date.today(), ) + (tuple(partner_ids),))))
         for row in self.env.cr.dictfetchall():
             res[row.pop('partner_id')].append(row)
-        print("partner_idspartner_ids",partner_ids)
+        #print("partner_idspartner_ids",partner_ids)
         for partner in partner_ids:
             p =self.env['res.partner'].browse(partner)
             amls = p.unreconciled_aml_ids
             print(amls)
             vals =[]
             for l in amls:
-                print(l.amount_residual_currency if l.currency_id else l.amount_residual)
+                #print(l.amount_residual_currency if l.currency_id else l.amount_residual)
                 dict={'move_id':l.move_id.name,'name':l.name, 'date':l.date ,'date_maturity':  l.date_maturity , 'origin':l.invoice_id.origin , 'ref':l.ref , 'credit':l.credit, 'debit':l.debit, 'amount':l.amount_residual_currency if l.currency_id else l.amount_residual ,
                      'payment_id':l.payment_id, 'currency_id':l.currency_id , 'amount_currency':l.amount_currency , 'mat':(l.amount_residual_currency if l.currency_id else l.amount_residual) if l.date_maturity < fields.date.today() else 0 , 'blocked':l.blocked }
                 vals.append(dict)
@@ -148,8 +148,8 @@ class AccountFollowupReport(models.AbstractModel):
         if not partner:
             return []
         lang_code = partner.lang or self.env.user.lang or 'en_US'
-        print(partner)
-        print(partner.unreconciled_aml_ids)
+        # print(partner)
+        # print(partner.unreconciled_aml_ids)
         lines = []
         res = {}
         today = fields.Date.today()
@@ -188,11 +188,11 @@ class AccountFollowupReport(models.AbstractModel):
                     format_date(self.env, aml.date, lang_code=lang_code),
                     date_due,
                     aml.invoice_id.origin,
-
+                    job_number,
                     move_line_name,
                     expected_pay_date + ' ' + (aml.internal_note or ''),
                     {'name': aml.blocked, 'blocked': aml.blocked},
-                    job_number,
+
                     amount
                 ]
                 if self.env.context.get('print_mode'):
