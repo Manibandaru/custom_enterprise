@@ -135,7 +135,7 @@ class AccountFollowupReport(models.AbstractModel):
                    {'name': _('Total Due'), 'class': 'number o_price_total', 'style': 'text-align:right; white-space:nowrap;'}
                   ]
         if self.env.context.get('print_mode'):
-            headers = headers[:6] + headers[8:]  # Remove the 'Expected Date' and 'Excluded' columns
+            headers = headers[:7] + headers[9:]  # Remove the 'Expected Date' and 'Excluded' columns
         return headers
 
     def _get_lines(self, options, line_id=None):
