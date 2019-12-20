@@ -28,7 +28,22 @@ class ReportOverdue(models.AbstractModel):
             "WHERE l.partner_id IN %s AND at.type IN ('receivable', 'payable') AND l.full_reconcile_id IS NULL GROUP BY l.date, l.name, l.ref, l.date_maturity, l.partner_id, at.type, l.blocked, l.amount_currency, l.currency_id, l.move_id, m.name,ai.origin", (((fields.date.today(), ) + (tuple(partner_ids),))))
         for row in self.env.cr.dictfetchall():
             res[row.pop('partner_id')].append(row)
-        return res
+        print("partner_idspartner_ids",partner_ids)
+        for partner in partner_ids:
+            p =self.env['res.partner'].browse(partner)
+            amls = p.unreconciled_aml_ids
+            print(amls)
+            vals =[]
+            for l in amls:
+                print(l.amount_residual_currency if l.currency_id else l.amount_residual)
+                dict={'move_id':l.move_id.name,'name':l.name, 'date':l.date ,'date_maturity':  l.date_maturity , 'origin':l.invoice_id.origin , 'ref':l.ref , 'credit':l.credit, 'debit':l.debit, 'amount':l.amount_residual_currency if l.currency_id else l.amount_residual ,
+                     'payment_id':l.payment_id, 'currency_id':l.currency_id , 'amount_currency':l.amount_currency , 'mat':(l.amount_residual_currency if l.currency_id else l.amount_residual) if l.date_maturity < fields.date.today() else 0 , 'blocked':l.blocked }
+                vals.append(dict)
+
+            r = {partner:vals}
+        # print("RRRRRRRRRR",r)
+        # print("RESRES=",res)
+        return r
 
     @api.model
     def _get_report_values(self, docids, data=None):
@@ -46,19 +61,24 @@ class ReportOverdue(models.AbstractModel):
                 currency = line['currency_id'] and self.env['res.currency'].browse(line['currency_id']) or company_currency
                 if currency not in lines_to_display[partner_id]:
                     lines_to_display[partner_id][currency] = []
-                    totals[partner_id][currency] = dict((fn, 0.0) for fn in ['due', 'paid', 'mat', 'total'])
+                    totals[partner_id][currency] = dict((fn, 0.0) for fn in ['due', 'paid', 'mat', 'total','amount'])
                 if line['debit'] and line['currency_id']:
                     line['debit'] = line['amount_currency']
                 if line['credit'] and line['currency_id']:
                     line['credit'] = line['amount_currency']
                 if line['mat'] and line['currency_id']:
                     line['mat'] = line['amount_currency']
+                if line['amount'] and line['currency_id']:
+                    line['amount'] = line['amount_currency']
                 lines_to_display[partner_id][currency].append(line)
                 if not line['blocked']:
                     totals[partner_id][currency]['due'] += line['debit']
                     totals[partner_id][currency]['paid'] += line['credit']
                     totals[partner_id][currency]['mat'] += line['mat']
                     totals[partner_id][currency]['total'] += line['debit'] - line['credit']
+
+                    totals[partner_id][currency]['amount'] += line['amount']
+
         return {
             'doc_ids': docids,
             'doc_model': 'res.partner',
@@ -106,16 +126,16 @@ class AccountFollowupReport(models.AbstractModel):
         headers = [{},
                    {'name': _('Date'), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'},
                    {'name': _('Due Date'), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'},
-                   {'name': _('Source Document'), 'style': 'text-align:center; white-space:nowrap;'},
-
-                   {'name': _('Communication'), 'style': 'text-align:right; white-space:nowrap;'},
+                   {'name': _('Source Document'), 'style': 'text-align:left; white-space:nowrap;'},
+                   {'name': _('Job Number'), 'style': 'text-align:left; white-space:nowrap;'},
+                   {'name': _('Communication'), 'style': 'text-align:left; white-space:nowrap;'},
                    {'name': _('Expected Date'), 'class': 'date', 'style': 'white-space:nowrap;'},
                    {'name': _('Excluded'), 'class': 'date', 'style': 'white-space:nowrap;'},
-                   {'name': _('Job Number'), 'style': 'text-align:right; white-space:nowrap;'},
+
                    {'name': _('Total Due'), 'class': 'number o_price_total', 'style': 'text-align:right; white-space:nowrap;'}
                   ]
         if self.env.context.get('print_mode'):
-            headers = headers[:5] + headers[7:]  # Remove the 'Expected Date' and 'Excluded' columns
+            headers = headers[:6] + headers[8:]  # Remove the 'Expected Date' and 'Excluded' columns
         return headers
 
     def _get_lines(self, options, line_id=None):
