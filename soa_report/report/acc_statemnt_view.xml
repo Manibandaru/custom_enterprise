@@ -86,6 +86,13 @@
                                 <span t-esc="Totals[o.id][currency]['due'] - Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td><strong>Total OverDue :</strong></td>
+                            <td style="text-align:right">
+                                <span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                            </td>
+                        </tr>
                     </table>
                 </t>
                 <p t-if="not Lines[o.id]">
