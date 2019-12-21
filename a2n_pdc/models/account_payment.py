@@ -185,6 +185,24 @@ class account_payment(models.Model):
             move_vals['name'] = name
         return move_vals
 
+    def _get_move_vals_pdc(self, journal=None):
+        """ Return dict to create the payment move
+        """
+        journal = journal or self.journal_id
+
+        move_vals = {
+            'date': self.cheque_date if self.pay_mode=='cheque' else  self.payment_date ,
+            'ref': self.communication or '',
+            'company_id': self.company_id.id,
+            'journal_id': journal.id,
+        }
+
+        name = False
+
+        if name:
+            move_vals['name'] = name
+        return move_vals
+
 
     @api.multi
     def pdc_release(self):
@@ -197,7 +215,7 @@ class account_payment(models.Model):
                 aml_obj = self.env['account.move.line'].with_context(check_move_validity=False)
                 debit, credit, amount_currency, currency_id = aml_obj.with_context(date=self.payment_date)._compute_amount_fields(self.amount, self.currency_id, self.company_id.currency_id)
 
-                move_vals=self._get_move_vals()
+                move_vals=self._get_move_vals_pdc()
                 move_vals.update({'date':datetime.today()})
                 move = self.env['account.move'].create(move_vals)
 
@@ -232,7 +250,7 @@ class account_payment(models.Model):
                     date=self.payment_date)._compute_amount_fields(self.amount, self.currency_id,
                                                                    self.company_id.currency_id)
 
-                move_vals = self._get_move_vals()
+                move_vals = self._get_move_vals_pdc()
                 move_vals.update({'date': datetime.today()})
                 move = self.env['account.move'].create(move_vals)
 
