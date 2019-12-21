@@ -89,7 +89,7 @@
                             <td style="text-align:right"><span t-esc="Totals[o.id][currency]['amount']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
 <!--                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>-->
 <!--                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>-->
-                            <td></td>
+<!--                            <td></td>-->
                         </tr>
 
                         <tr>
