@@ -127,7 +127,7 @@
         <t t-if="context.get('snailmail_layout')" t-set="contact_widget_fields" t-value="['address', 'name']"/>
         <t t-else="" t-set="contact_widget_fields" t-value="['address', 'name', 'phone']"/>
                  <div style="text-align:center">
-                    <h4><strong><span style="text-align:center"> STATEMENT OF ACCOUNT</span></strong></h4>
+                    <h4><strong><span style="text-align:center"> STATEMENT OF ACCOUNTS</span></strong></h4>
                 </div>
                 <div class="row">
                     <div class="col-5 offset-7" style='margin-top: 15px;'>

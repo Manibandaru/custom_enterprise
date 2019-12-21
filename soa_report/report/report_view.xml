@@ -16,17 +16,17 @@
         <field name="header_spacing">20</field>
         <field name="dpi">110</field>
     </record>
-<report
-            id="action_cus_sup_report"
-            string="Statement Of Account"
-            model="res.partner"
-            report_type="qweb-pdf"
-            file="soa_report.acc_statemnt_view"
-            name="soa_report.acc_statemnt_view"
-            paperformat="soa_report.paperformat_account_standard"
-            menu="True"
-            groups="base.group_user"
-        />
+<!--<report-->
+<!--            id="action_cus_sup_report"-->
+<!--            string="Statement Of Account"-->
+<!--            model="res.partner"-->
+<!--            report_type="qweb-pdf"-->
+<!--            file="soa_report.acc_statemnt_view"-->
+<!--            name="soa_report.acc_statemnt_view"-->
+<!--            paperformat="soa_report.paperformat_account_standard"-->
+<!--            menu="True"-->
+<!--            groups="base.group_user"-->
+<!--        />-->
 
     </data>
 </odoo>
