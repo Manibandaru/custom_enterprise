@@ -126,16 +126,15 @@ class AccountFollowupReport(models.AbstractModel):
         headers = [{},
                    {'name': _('Date'), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'},
                    {'name': _('Due Date'), 'class': 'date', 'style': 'text-align:center; white-space:nowrap;'},
-                   {'name': _('Source Document'), 'style': 'text-align:left; white-space:nowrap;'},
-                   {'name': _('Job Number'), 'style': 'text-align:left; white-space:nowrap;'},
-                   {'name': _('Communication'), 'style': 'text-align:left; white-space:nowrap;'},
+                   {'name': _('Job Number'), 'style': 'text-align:center; white-space:nowrap;'},
+                   {'name': _('Communication'), 'style': 'text-align:right; white-space:nowrap;'},
                    {'name': _('Expected Date'), 'class': 'date', 'style': 'white-space:nowrap;'},
                    {'name': _('Excluded'), 'class': 'date', 'style': 'white-space:nowrap;'},
-
-                   {'name': _('Total Due'), 'class': 'number o_price_total', 'style': 'text-align:right; white-space:nowrap;'}
-                  ]
+                   {'name': _('Total Due'), 'class': 'number o_price_total',
+                    'style': 'text-align:right; white-space:nowrap;'}
+                   ]
         if self.env.context.get('print_mode'):
-            headers = headers[:6] + headers[8:]  # Remove the 'Expected Date' and 'Excluded' columns
+            headers = headers[:5] + headers[7:]  # Remove the 'Expected Date' and 'Excluded' columns
         return headers
 
     def _get_lines(self, options, line_id=None):
@@ -148,8 +147,7 @@ class AccountFollowupReport(models.AbstractModel):
         if not partner:
             return []
         lang_code = partner.lang or self.env.user.lang or 'en_US'
-        # print(partner)
-        # print(partner.unreconciled_aml_ids)
+
         lines = []
         res = {}
         today = fields.Date.today()
@@ -174,28 +172,28 @@ class AccountFollowupReport(models.AbstractModel):
                 if is_overdue or is_payment:
                     total_issued += not aml.blocked and amount or 0
                 if is_overdue:
-                    date_due = {'name': date_due, 'class': 'color-red date', 'style': 'white-space:nowrap;text-align:center;color: red;'}
+                    date_due = {'name': date_due, 'class': 'color-red date',
+                                'style': 'white-space:nowrap;text-align:center;color: red;'}
                 if is_payment:
                     date_due = ''
                 move_line_name = aml.invoice_id.name or aml.name
                 if self.env.context.get('print_mode'):
                     move_line_name = {'name': move_line_name, 'style': 'text-align:right; white-space:normal;'}
                 amount = formatLang(self.env, amount, currency_obj=currency)
-                job_number = aml.invoice_id.origin
                 line_num += 1
-                expected_pay_date = format_date(self.env, aml.expected_pay_date, lang_code=lang_code) if aml.expected_pay_date else ''
+                expected_pay_date = format_date(self.env, aml.expected_pay_date,
+                                                lang_code=lang_code) if aml.expected_pay_date else ''
                 columns = [
                     format_date(self.env, aml.date, lang_code=lang_code),
                     date_due,
                     aml.invoice_id.origin,
-                    job_number,
                     move_line_name,
                     expected_pay_date + ' ' + (aml.internal_note or ''),
                     {'name': aml.blocked, 'blocked': aml.blocked},
-                    amount
+                    amount,
                 ]
                 if self.env.context.get('print_mode'):
-                    columns = columns[:5] + columns[7:]
+                    columns = columns[:4] + columns[6:]
                 lines.append({
                     'id': aml.id,
                     'invoice_id': aml.invoice_id.id,
@@ -217,7 +215,8 @@ class AccountFollowupReport(models.AbstractModel):
                 'class': 'total',
                 'unfoldable': False,
                 'level': 0,
-                'columns': [{'name': v} for v in [''] * (4 if self.env.context.get('print_mode') else 6) + [total >= 0 and _('Total Dues') or '', total_due]],
+                'columns': [{'name': v} for v in [''] * (3 if self.env.context.get('print_mode') else 5) + [
+                    total >= 0 and _('Total Due') or '', total_due]],
             })
             if total_issued > 0:
                 total_issued = formatLang(self.env, total_issued, currency_obj=currency)
@@ -228,7 +227,9 @@ class AccountFollowupReport(models.AbstractModel):
                     'class': 'total',
                     'unfoldable': False,
                     'level': 0,
-                    'columns': [{'name': v} for v in [''] * (4 if self.env.context.get('print_mode') else 6) + [_('Total Overdue'), total_issued]],
+                    'columns': [{'name': v} for v in
+                                [''] * (3 if self.env.context.get('print_mode') else 5) + [_('Total Overdue'),
+                                                                                           total_issued]],
                 })
             # Add an empty line after the total to make a space between two currencies
             line_num += 1
@@ -252,14 +253,16 @@ class AccountFollowupReport(models.AbstractModel):
         """
         partner = self.env['res.partner'].browse(options.get('partner_id'))
         lang = partner.lang or self.env.user.lang or 'en_US'
-        return
+        return self.env.user.company_id.with_context(lang=lang).overdue_msg or \
+               self.env['res.company'].with_context(lang=lang).default_get(['overdue_msg'])['overdue_msg']
 
     def _get_report_manager(self, options):
         """
         Override
         Compute and return the report manager for the partner_id in options
         """
-        domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id')), ('company_id', '=', self.env.user.company_id.id)]
+        domain = [('report_name', '=', 'account.followup.report'), ('partner_id', '=', options.get('partner_id')),
+                  ('company_id', '=', self.env.user.company_id.id)]
         existing_manager = self.env['account.report.manager'].search(domain, limit=1)
         if existing_manager and not options.get('keep_summary'):
             existing_manager.write({'summary': self._get_default_summary(options)})
@@ -282,9 +285,11 @@ class AccountFollowupReport(models.AbstractModel):
         partner = self.env['res.partner'].browse(options['partner_id'])
         additional_context['partner'] = partner
         additional_context['lang'] = partner.lang or self.env.user.lang or 'en_US'
-        additional_context['invoice_address_id'] = self.env['res.partner'].browse(partner.address_get(['invoice'])['invoice'])
+        additional_context['invoice_address_id'] = self.env['res.partner'].browse(
+            partner.address_get(['invoice'])['invoice'])
         additional_context['today'] = fields.date.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
-        return super(AccountFollowupReport, self).get_html(options, line_id=line_id, additional_context=additional_context)
+        return super(AccountFollowupReport, self).get_html(options, line_id=line_id,
+                                                           additional_context=additional_context)
 
     def _get_report_name(self):
         """
@@ -340,7 +345,8 @@ class AccountFollowupReport(models.AbstractModel):
         options['keep_summary'] = True
         if email and email.strip():
             # When printing we need te replace the \n of the summary by <br /> tags
-            body_html = self.with_context(print_mode=True, mail=True, lang=partner.lang or self.env.user.lang).get_html(options)
+            body_html = self.with_context(print_mode=True, mail=True, lang=partner.lang or self.env.user.lang).get_html(
+                options)
             start_index = body_html.find(b'<span>', body_html.find(b'<div class="o_account_reports_summary">'))
             end_index = start_index > -1 and body_html.find(b'</span>', start_index) or -1
             if end_index > -1:
@@ -348,9 +354,9 @@ class AccountFollowupReport(models.AbstractModel):
                 body_html = body_html[:start_index] + replaced_msg + body_html[end_index:]
             msg = _('Follow-up email sent to %s') % email
             # Remove some classes to prevent interactions with messages
-            msg += '<br>' + body_html.decode('utf-8')\
-                .replace('o_account_reports_summary', '')\
-                .replace('o_account_reports_edit_summary_pencil', '')\
+            msg += '<br>' + body_html.decode('utf-8') \
+                .replace('o_account_reports_summary', '') \
+                .replace('o_account_reports_edit_summary_pencil', '') \
                 .replace('fa-pencil', '')
             msg_id = partner.message_post(body=msg, message_type='email')
             email = self.env['mail.mail'].create({
@@ -384,7 +390,9 @@ class AccountFollowupReport(models.AbstractModel):
         if partner.followup_status == 'in_need_of_action':
             partner.send_followup_email()
             next_date = fields.datetime.now() + timedelta(days=self.env.user.company_id.days_between_two_followups)
-            partner.update_next_action(options={'next_action_date': datetime.strftime(next_date, DEFAULT_SERVER_DATE_FORMAT), 'next_action_type': 'auto'})
+            partner.update_next_action(
+                options={'next_action_date': datetime.strftime(next_date, DEFAULT_SERVER_DATE_FORMAT),
+                         'next_action_type': 'auto'})
             return partner
         return None
 
