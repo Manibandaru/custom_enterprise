@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_account_payment_form_inherit_pdc" model="ir.ui.view">
+                <field name="name">view.account.payment.form.inherit.pdc</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="account.view_account_payment_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr='//button[@name="post"]' position="after">
+                        <button name="pdc_release" class="oe_highlight" states="pdc" string="Release" type="object"/>
+                        <button name="pdc_bounce" class="oe_highlight" states="pdc" string="Bounce" type="object"/>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                        <field name="pay_mode" widget="radio" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="cheque_type" attrs="{'invisible':[('pay_mode','!=','cheque')] , 'readonly':[('state','!=','draft')]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='communication']" position="after">
+                        <field name="cheque_date" attrs="{'invisible':[('pay_mode','!=','cheque')], 'readonly':[('state','!=','draft')] , 'required':[('cheque_type','=','pdc')]}"/>
+                        <field name="cheque_no" attrs="{'invisible':[('pay_mode','!=','cheque')], 'readonly':[('state','!=','draft')], 'required':[('cheque_type','=','pdc')]}"/>
+                        <field name="pdc_entry" readonly="1" attrs="{'invisible':[('pay_mode','!=','cheque')]}"/>
+                    </xpath>
+                </field>
+        </record>
+
+
+
+
+
+
+        <menuitem id="customer_pdc_payment_menu" name="PDC Receivables" parent="account.menu_finance_receivables"
+                action="account.action_account_payments" sequence="19"/>
+        <menuitem id="vendor_pdc_payment_menu" name="PDC Payables" parent="account.menu_finance_payables"
+                action="account.action_account_payments" sequence="20"/>
+
+    </data>
+</odoo>
