@@ -22,15 +22,87 @@
                 </field>
         </record>
 
+        <record id="view_account_pdc_receivable_tree" model="ir.ui.view">
+            <field name="name">view.account.pdc.receivable.tree</field>
+            <field name="model">account.payment</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state in ['reconciled', 'cancelled']" edit="false">
+                    <field name="payment_date"/>
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="payment_method_id"/>
+                    <field name="partner_id" string="Vendor"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
 
+        <record id="view_account_pdc_payable_tree" model="ir.ui.view">
+            <field name="name">view.account.pdc.payable.tree</field>
+            <field name="model">account.payment</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state in ['reconciled', 'cancelled']" edit="false">
+                    <field name="payment_date"/>
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="payment_method_id"/>
+                    <field name="partner_id" string="Vendor"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_account_payments_pdc_receibavle" model="ir.actions.act_window">
+            <field name="name">PDC Receivables</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="context">{'default_payment_type': 'inbound', 'default_partner_type': 'customer', 'search_default_inbound_filter': 1}</field>
+            <field name="domain">[('state','=','pdc')]</field>
+            <field name="view_id" ref="view_account_pdc_receivable_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Register a payment
+                </p><p>
+                  Payments are used to register liquidity movements. You can process those payments by your own means or by using installed facilities.
+                </p>
+            </field>
+        </record>
+
+
+        <record id="action_account_payments_pdc_payable" model="ir.actions.act_window">
+            <field name="name">PDC Payables</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="context">{'default_payment_type': 'inbound', 'default_partner_type': 'customer', 'search_default_inbound_filter': 1}</field>
+            <field name="domain">[('state','=','pdc')]</field>
+            <field name="view_id" ref="view_account_pdc_payable_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Register a payment
+                </p><p>
+                  Payments are used to register liquidity movements. You can process those payments by your own means or by using installed facilities.
+                </p>
+            </field>
+        </record>
 
 
 
 
         <menuitem id="customer_pdc_payment_menu" name="PDC Receivables" parent="account.menu_finance_receivables"
-                action="account.action_account_payments" sequence="19"/>
+                action="a2n_pdc.action_account_payments_pdc_receibavle" sequence="19"/>
         <menuitem id="vendor_pdc_payment_menu" name="PDC Payables" parent="account.menu_finance_payables"
-                action="account.action_account_payments" sequence="20"/>
+                action="a2n_pdc.action_account_payments_pdc_payable" sequence="20"/>
 
     </data>
 </odoo>
