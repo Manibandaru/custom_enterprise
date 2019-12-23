@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <template id="soa_pdc_details" inherit_id="soa_report.report_view_account_stamt">
+        <xpath expr="//t[@t-if='not Lines[o.id]']" position="after">
+
+        </xpath>
+    </template>

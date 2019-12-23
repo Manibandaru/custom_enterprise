@@ -18,6 +18,8 @@
                         <field name="cheque_date" attrs="{'invisible':[('pay_mode','!=','cheque')], 'readonly':[('state','!=','draft')] , 'required':[('cheque_type','=','pdc')]}"/>
                         <field name="cheque_no" attrs="{'invisible':[('pay_mode','!=','cheque')], 'readonly':[('state','!=','draft')], 'required':[('cheque_type','=','pdc')]}"/>
                         <field name="pdc_entry" readonly="1" attrs="{'invisible':[('pay_mode','!=','cheque')]}"/>
+                        <field name="bank_date" attrs="{'invisible':[('cheque_type','!=','pdc')] , 'readonly':[('state', '!=','pdc' )]}"/>
+                        <field name="pdc_payment" invisible="1"/>
                     </xpath>
                 </field>
         </record>

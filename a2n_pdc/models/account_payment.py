@@ -22,6 +22,8 @@ class account_payment(models.Model):
     pdc_entry = fields.Many2one('account.move',string='PDC Entry')
     state = fields.Selection([('draft', 'Draft'), ('posted', 'Posted'), ('sent', 'Sent'), ('reconciled', 'Reconciled'),
                               ('cancelled', 'Cancelled'),('pdc','PDC')], readonly=True, default='draft', copy=False, string="Status")
+    bank_date = fields.Date(string='Bank Date')
+    pdc_payment = fields.Boolean('PDC payment')
 
     @api.multi
     def post(self):
@@ -79,7 +81,7 @@ class account_payment(models.Model):
             if self.pay_mode != 'cheque' and self.cheque_type != 'pdc':
                 rec.write({'state': 'posted', 'move_name': persist_move_name})
             else:
-                rec.write({'state': 'pdc', 'move_name': persist_move_name})
+                rec.write({'state': 'pdc', 'move_name': persist_move_name,'pdc_payment':True})
         return True
 
 
@@ -211,12 +213,15 @@ class account_payment(models.Model):
             if record.state not in 'pdc':
                 raise ValidationError(_('You cannot Release a Non PDC Cheque'))
 
+            if not record.bank_date:
+                raise ValidationError(_('You cannot Release without Giving the Bank Date'))
+
             if self.payment_type=='inbound':
                 aml_obj = self.env['account.move.line'].with_context(check_move_validity=False)
                 debit, credit, amount_currency, currency_id = aml_obj.with_context(date=self.payment_date)._compute_amount_fields(self.amount, self.currency_id, self.company_id.currency_id)
 
                 move_vals=self._get_move_vals_pdc()
-                move_vals.update({'date':datetime.today()})
+                move_vals.update({'date':self.bank_date})
                 move = self.env['account.move'].create(move_vals)
 
 
@@ -251,7 +256,7 @@ class account_payment(models.Model):
                                                                    self.company_id.currency_id)
 
                 move_vals = self._get_move_vals_pdc()
-                move_vals.update({'date': datetime.today()})
+                move_vals.update({'date': self.bank_date})
                 move = self.env['account.move'].create(move_vals)
 
                 counterpart_aml_dict = self._get_shared_move_line_vals(debit, credit, amount_currency, move.id, False)

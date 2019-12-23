@@ -11,7 +11,8 @@ Manage your company Current and Post Dated Cheques
     'depends': ['base','account','sale','purchase','web'],
     'data': [
         'views/account_payment_view.xml',
-        'views/account_config_view.xml'
+        'views/account_config_view.xml',
+        #'views/soa_report_view.xml'
     ],
     'demo': [],
     'test': [],
