@@ -31,8 +31,18 @@
                                 <span t-esc="line['amount']" />
                             </td>
                         </tr>
+                    <tr>
+                        <td Colspan="3" style="text-align:center"><strong> Total PDC Amount </strong> </td>
+                        <td>
+                         <span t-esc="pdc_total"/>
+                        </td>
+                    </tr>
+
 
                     </table>
+                <tr>
+                        <span> <strong> **/ Balance in this statement is subject to realisation of the above mentioned PDC Cheques /**</strong></span>
+                    </tr>
                 </t>
 
         </xpath>

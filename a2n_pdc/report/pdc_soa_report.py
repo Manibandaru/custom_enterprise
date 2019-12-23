@@ -54,6 +54,14 @@ class ReportOverdue(models.AbstractModel):
 
                     totals[partner_id][currency]['amount'] += line['amount']
             pdc_details = self.get_pdc_details(docids)
+            print("PDC DETAILS",pdc_details)
+            pdc_total = 0
+            for line in pdc_details[partner_id]:
+                print("line",line)
+                pdc_total += line['amount']
+            print(pdc_total)
+
+
 
         return {
             'doc_ids': docids,
@@ -63,5 +71,6 @@ class ReportOverdue(models.AbstractModel):
             'Lines': lines_to_display,
             'Totals': totals,
             'Date': fields.date.today(),
-            "Pdc":pdc_details
+            "Pdc":pdc_details,
+            "pdc_total":pdc_total
         }

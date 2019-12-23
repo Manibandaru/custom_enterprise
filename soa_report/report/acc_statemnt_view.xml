@@ -67,9 +67,9 @@
                 <div >
                     <br/>
                     <strong>DATE : <span t-esc="Date"/><br/></strong>
-                   <strong> <span t-field="o.name"/><br/></strong>
-                    <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
-                    <span t-field="o.vat"/>
+<!--                   <strong> <span t-field="o.name"/><br/></strong>-->
+                   <strong> <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
+                    <span t-field="o.vat"/></strong>
                 </div>
             </div>
 
