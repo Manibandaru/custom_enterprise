@@ -47,12 +47,11 @@ class ReportOverdue(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-       # print("sjdddddddddddddddddddddddddddddddddlaskfhjdfdjskfgdjgvbbvxbveurhfiudhvjdfbvjdfvbjdfvbhvbdjfvbdjv  hv")
         totals = {}
         lines = self._get_account_move_lines(docids)
         lines_to_display = {}
         company_currency = self.env.user.company_id.currency_id
-       # print("docids",docids)
+
         for partner_id in docids:
             lines_to_display[partner_id] = {}
             totals[partner_id] = {}

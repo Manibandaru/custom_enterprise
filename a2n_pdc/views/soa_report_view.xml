@@ -4,7 +4,37 @@
 
 
     <template id="soa_pdc_details" inherit_id="soa_report.report_view_account_stamt">
-        <xpath expr="//t[@t-if='not Lines[o.id]']" position="after">
+        <xpath expr="//p[@t-if='not Lines[o.id]']" position="after">
+
+            <t t-if="Pdc[o.id]">
+                <Span><strong>PDC Details</strong></Span>
+                <table class="table table-bordered" style="width:50%" t-foreach="Pdc[o.id]" t-as="currency">
+                        <thead>
+                            <tr>
+                                <th> Cheque Number</th>
+                                <th >Cheque Date</th>
+                                <th >Payment Date</th>
+                                <th >Amount</th>
+                            </tr>
+                        </thead>
+                        <tr t-foreach="Pdc[o.id]" t-as="line">
+                            <td>
+                                <span t-esc="line['cheque_no']"/>
+                            </td>
+                            <td>
+                                <span t-esc="line['cheque_date']"/>
+                            </td>
+                            <td>
+                                <span t-esc="line['payment_date']"/>
+                            </td>
+                            <td style="text-align:right">
+                                <span t-esc="line['amount']" />
+                            </td>
+                        </tr>
+
+                    </table>
+                </t>
 
         </xpath>
     </template>
+</odoo>
