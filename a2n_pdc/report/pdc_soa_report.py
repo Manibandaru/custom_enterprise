@@ -8,7 +8,7 @@ class ReportOverdue(models.AbstractModel):
 
     @api.multi
     def get_pdc_details(self,docids):
-        print('Docids',docids)
+        
         pdc_lines = {}
         for partner_id in docids:
 
@@ -17,7 +17,7 @@ class ReportOverdue(models.AbstractModel):
             tmp = self.env.cr.dictfetchall()
             print("tmp",tmp)
             pdc_lines[partner_id] = tmp
-        print("pdc_lines",pdc_lines)
+
         return pdc_lines
 
     @api.model
@@ -54,8 +54,7 @@ class ReportOverdue(models.AbstractModel):
 
                     totals[partner_id][currency]['amount'] += line['amount']
             pdc_details = self.get_pdc_details(docids)
-            print("pdc_details",pdc_details)
-            print("lines_to_display",lines_to_display)
+
         return {
             'doc_ids': docids,
             'doc_model': 'res.partner',

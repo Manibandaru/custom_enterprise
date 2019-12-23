@@ -8,7 +8,7 @@
 
             <t t-if="Pdc[o.id]">
                 <Span><strong>PDC Details</strong></Span>
-                <table class="table table-bordered" style="width:50%" t-foreach="Pdc[o.id]" t-as="currency">
+                <table class="table table-bordered" style="width:50%"  t-as="currency">
                         <thead>
                             <tr>
                                 <th> Cheque Number</th>
