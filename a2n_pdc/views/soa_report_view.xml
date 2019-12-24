@@ -11,32 +11,36 @@
                 <table class="table table-bordered" style="width:50%"  t-as="currency">
                         <thead>
                             <tr>
-                                <th> Cheque Number</th>
-                                <th >Cheque Date</th>
-                                <th >Payment Date</th>
-                                <th >Amount</th>
-                                <th> Status</th>
+                                <th style="text-align:center"> Serial No.</th>
+                                <th style="text-align:center"> Cheque Number</th>
+                                <th style="text-align:center">Cheque Date</th>
+                                <th style="text-align:center">Payment Date</th>
+                                <th style="text-align:center">Amount</th>
+                                <th style="text-align:center"> Status</th>
                             </tr>
                         </thead>
                         <tr t-foreach="Pdc[o.id]" t-as="line">
-                            <td>
+                            <td style="text-align:center">
+                                <span t-esc="line_index+1"/>
+                            </td>
+                            <td style="text-align:center">
                                 <span t-esc="line['cheque_no']"/>
                             </td>
-                            <td>
+                            <td style="text-align:center">
                                 <span t-esc="line['cheque_date']"/>
                             </td>
-                            <td>
+                            <td style="text-align:center">
                                 <span t-esc="line['payment_date']"/>
                             </td>
                             <td style="text-align:right">
                                 <span t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                             </td>
-                            <td>
+                            <td style="text-align:center">
                                 <span>Pending</span>
                             </td>
                         </tr>
                     <tr>
-                        <td Colspan="3" style="text-align:center"><strong> Total PDC Amount </strong> </td>
+                        <td Colspan="4" style="text-align:center"><strong> Total PDC Amount </strong> </td>
                         <td style="text-align:right">
                          <span t-esc="pdc_total" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                         </td>

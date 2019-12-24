@@ -79,45 +79,45 @@
                     <table class="table table-bordered" t-foreach="Lines[o.id]" t-as="currency">
                         <thead>
                             <tr>
-                                <th>Reference number</th>
-                                <th >Date</th>
-                                <th >Due Date</th>
-                                <th >Job Number</th>
-                                <th>Communication</th>
+                                <th style="text-align:center">Reference number</th>
+                                <th style="text-align:center">Date</th>
+                                <th style="text-align:center">Due Date</th>
+                                <th style="text-align:center">Job Number</th>
+                                <th style="text-align:center">Communication</th>
 <!--                                <th >Due</th>-->
 <!--                                <th >Paid</th>-->
-                                <th >Amount Due</th>
+                                <th style="text-align:center">Amount Due</th>
                             </tr>
                         </thead>
                         <tr t-foreach="Lines[o.id][currency]" t-as="line">
-                            <td>
+                            <td style="text-align:center">
                                 <span t-esc="line['move_id']"/>
                             </td>
-                            <td>
+                            <td style="text-align:center">
                                 <span t-esc="line['date']"/>
                             </td>
                             <t t-if="not line['payment_id']" >
-                                <td t-if="line['date_maturity'] &lt; Date">
-                                    <span  style="color:red"   t-esc="line['date_maturity']"/>
+                                <td style="text-align:center" t-if="line['date_maturity'] &lt; Date">
+                                    <span  style="color:red;text-align:center"   t-esc="line['date_maturity']"/>
                                 </td>
-                                <td t-if="line['date_maturity'] &gt; Date">
+                                <td style="text-align:center" t-if="line['date_maturity'] &gt; Date">
                                     <span   style="color:black"   t-esc="line['date_maturity']"/>
                                 </td>
-                                 <td t-if="line['date_maturity'] == Date">
+                                 <td style="text-align:center" t-if="line['date_maturity'] == Date">
                                     <span style="color:black"   t-esc="line['date_maturity']"/>
                                 </td>
                             </t>
 
 
 
-                            <td t-if="line['payment_id'] ">
-                                <span style="color:white"   t-esc="line['date_maturity']"/>
+                            <td style="text-align:center" t-if="line['payment_id'] ">
+                                <span style="color:white;text-align:center"   t-esc="line['date_maturity']"/>
                             </td>
 
-                            <td >
+                            <td  style="text-align:center">
                                 <span t-esc="line['origin']"/>
                             </td>
-                            <td>
+                            <td  style="text-align:center">
                                 <t t-if="line['name'] != '/'"><span t-esc="line['name']"/></t>
                                 <span t-esc="line['ref']"/>
                             </td>
