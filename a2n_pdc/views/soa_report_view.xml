@@ -15,6 +15,7 @@
                                 <th >Cheque Date</th>
                                 <th >Payment Date</th>
                                 <th >Amount</th>
+                                <th> Status</th>
                             </tr>
                         </thead>
                         <tr t-foreach="Pdc[o.id]" t-as="line">
@@ -28,13 +29,16 @@
                                 <span t-esc="line['payment_date']"/>
                             </td>
                             <td style="text-align:right">
-                                <span t-esc="line['amount']" />
+                                <span t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                            <td>
+                                <span>Pending</span>
                             </td>
                         </tr>
                     <tr>
                         <td Colspan="3" style="text-align:center"><strong> Total PDC Amount </strong> </td>
-                        <td>
-                         <span t-esc="pdc_total"/>
+                        <td style="text-align:right">
+                         <span t-esc="pdc_total" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                         </td>
                     </tr>
 
