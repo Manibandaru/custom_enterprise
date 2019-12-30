@@ -10,9 +10,12 @@ Manage your company Current and Post Dated Cheques
     'author': 'Mani Shankar',
     'depends': ['base','account','sale','purchase','web','soa_report'],
     'data': [
+        'security/ir.model.access.csv',
+        'wizard/release_date_view.xml',
         'views/account_payment_view.xml',
         'views/account_config_view.xml',
-        'views/soa_report_view.xml'
+        'views/soa_report_view.xml',
+
     ],
     'demo': [],
     'test': [],
