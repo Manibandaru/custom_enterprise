@@ -10,8 +10,12 @@ from itertools import groupby
 
 
 
-class account_payment(models.Model):
+class account_payments(models.Model):
     _inherit = "account.payment"
+
+    @api.model
+    def _get_move_name_transfer_separator(self):
+        return '§§'
 
 
     pay_mode = fields.Selection([('bank','Bank'),('cash','Cash'),('cheque','Cheque')],string='Payment Mode')
