@@ -55,4 +55,32 @@
 
         </xpath>
     </template>
+
+
+
+
+
+
+    <template id="cheque_details_in_receipt" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//div[@class='row mb64']" position="before">
+
+            <div class="row">
+                <div   class="col-6">
+                    <t t-if="o.cheque_date">
+                        <strong>Cheque Date :</strong>
+                        <span  t-field="o.cheque_date" > </span>
+                    </t>
+                 </div>
+                <div class="col-6">
+                    <t t-if="o.cheque_no">
+                        <strong>Cheque Number :</strong>
+                        <span  t-field="o.cheque_no" > </span>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+
+
 </odoo>
