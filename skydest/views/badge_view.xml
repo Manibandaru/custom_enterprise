@@ -79,6 +79,10 @@
                 <field name="gender"/>
                 <field name="emirate"/>
                 <field name="dob"/>
+                <field name="university"/>
+                <field name="course"/>
+                <field name="year_of_study"/>
+                <field name="intern_role"/>
 
 
 
@@ -123,7 +127,7 @@
 
 
 
-                        <div class="form-group row form-field o_website_form_required_custom">
+                        <div t-if="job.job_type in ('job','cv_droping')" class="form-group row form-field o_website_form_required_custom">
                             <div class="col-lg-3 col-md-4 text-right">
                                 <label class="col-form-label" for="experience">Experience</label>
                             </div>
@@ -154,6 +158,66 @@
                             </div>
                         </div>
 
+                        <div t-if="job.job_type=='internship'" class="form-group row form-field o_website_form_required_custom">
+                            <div  class="col-lg-3 col-md-4 text-right">
+                                <label class="col-form-label" for="university">University</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="university" required="1"/>
+                            </div>
+                        </div>
+
+                          <div t-if="job.job_type=='internship'" class="form-group row form-field o_website_form_required_custom">
+                            <div  class="col-lg-3 col-md-4 text-right">
+                                <label class="col-form-label" for="course">Course of Study</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="course" required="1"/>
+                            </div>
+                        </div>
+
+
+                        <div t-if="job.job_type=='internship'" class="form-group row form-field o_website_form_required_custom">
+                            <div  class="col-lg-3 col-md-4 text-right">
+                                <label class="col-form-label" for="intern_role">Internship Role</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select name="intern_role" t-attf-class="form-control o_website_form_input">
+                                    <option value="accounts">Accounting or Finance</option>
+                                    <option value="admin">Administration</option>
+                                    <option value="architecture">Architecture</option>
+                                    <option value="sales">Sales, Marketing and business development</option>
+                                    <option value="social">Community and Social Services Internships</option>
+                                    <option value="consultant">Consultant</option>
+                                    <option value="customer_service">Customer Services and Support</option>
+                                    <option value="education">Education Internships</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="data_analytics">Data and Analytics</option>
+                                    <option value="animation">Design and Animation</option>
+                                    <option value="healthcare">Healthcare Services</option>
+                                    <option value="hr">Human Resources </option>
+                                    <option value="interior">Interior Design</option>
+                                    <option value="it">IT, Web and Software Development</option>
+                                    <option value="legal">Legal</option>
+                                    <option value="media">Media and Communications</option>
+                                    <option value="operations">Operations</option>
+                                    <option value="photography">Photography and Videography</option>
+                                    <option value="logistics">Supply chain and logistics management</option>
+                                    <option value="project_management">Project Management</option>
+                                    <option value="events">Promotions and events</option>
+                                     <option value="research">Research</option>
+                                    <option value="journalism">Journalism and writing</option>
+
+
+
+
+
+                                </select>
+                            </div>
+
+                        </div>
+
+
                         <div class="form-group row form-field o_website_form_required_custom">
                             <div class="col-lg-3 col-md-4 text-right">
                                 <label class="col-form-label" for="visa_status">Visa Status</label>
@@ -168,7 +232,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row form-field o_website_form_required_custom">
+                        <div t-if="job.job_type in ('job','cv_droping')" class="form-group row form-field o_website_form_required_custom">
                             <div class="col-lg-3 col-md-4 text-right">
                                 <label class="col-form-label" for="availability">Availabilty</label>
                             </div>
@@ -198,19 +262,7 @@
                             </div>
                         </div>
 
-<!--                        <div class="form-group row form-field o_website_form_required_custom">-->
-<!--                            <div class="col-lg-3 col-md-4 text-right">-->
-<!--                                <label class="col-form-label" for="nationality">Nationality</label>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-7 col-md-8">-->
-<!--                                <select name="experience" t-attf-class="form-control o_website_form_input">-->
-<!--            <option value="User">User</option>-->
-<!--            <option value="Company">Company</option>-->
-<!--            <option value="Agency">Agency</option>-->
-<!--            <option value="Influencer">Influencer</option>-->
-<!--        </select>-->
-<!--                            </div>-->
-<!--                        </div>-->
+
 
                         <div class="form-group row form-field o_website_form_required_custom">
                             <div class="col-lg-3 col-md-4 text-right">
@@ -387,5 +439,43 @@
         </div>
     </div>
 </template>
+
+
+
+    <record id="hr.view_hr_job_form" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="arch" type="xml">
+                <form string="Job">
+                    <header>
+                        <button name="set_recruit" string="Start Recruitment" states="open" type="object" class="oe_highlight" groups="base.group_user"/>
+                        <button name="set_open" string="Stop Recruitment" states="recruit" type="object" groups="base.group_user"/>
+                        <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="e.g. Sales Manager"/></h1>
+                        </div>
+                        <group>
+                            <group string="Recruitment" name="recruitment">
+                                <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                                <field name="department_id"/>
+                                <field name="no_of_recruitment"/>
+                                <field name="job_type"/>
+                            </group>
+                        </group>
+                        <div attrs="{'invisible': [('state', '!=', 'recruit')]}">
+                            <label for="description"/>
+                            <field name="description"/>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                    </div>
+                </form>
+            </field>
+        </record>
 
 </odoo>

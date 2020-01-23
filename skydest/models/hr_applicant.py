@@ -26,3 +26,45 @@ class Applicant(models.Model):
         ('abudhabi', 'Abu Dhabi'),
                 ],string='Emirate')
     dob = fields.Date(string='Date of Birth')
+    university = fields.Char(string='University')
+    course = fields.Char(string='Course of study')
+    year_of_study = fields.Char(string='Year of Study')
+    intern_role = fields.Selection([('accounts','Accounting or Finance'),('admin','Administration'),('architecture','Architecture'),
+                                    ('sales', 'Sales, Marketing and business development'),
+                                    ('social', 'Community and Social Services Internships'),
+                                    ('consultant', 'Consultant'),
+                                    ('customer_service', 'Customer Services and Support'),
+                                    ('education', 'Education Internships'),
+                                    ('engineering', 'Engineering'),
+                                    ('data_analytics', 'Data and Analytics'),
+                                    ('animation', 'Design and Animation'),
+                                    ('healthcare', 'Healthcare Services'),
+                                    ('hr', 'Human Resources'),
+                                    ('interior', 'Interior Design'),
+                                    ('it', 'IT, Web and Software Development'),
+                                    ('legal', 'Legal'),
+                                    ('media', 'Media and Communications'),
+                                    ('operations', 'Operations'),
+                                    ('photography', 'Photography and Videography'),
+                                    ('logistics', 'Supply chain and logistics management'),
+                                    ('project_management', 'Project Management'),
+                                    ('events', 'Promotions and events'),
+                                    ('research', 'Research'),
+                                    ('journalism', 'Journalism and writing'),
+
+
+
+
+
+
+                                    ],string='Internship Role')
+
+
+
+
+
+class hr_job_custom(models.Model):
+    _inherit = "hr.job"
+
+
+    job_type = fields.Selection([('job','Job'),('internship','Intern'),('cv_droping','CV Drop In')])
