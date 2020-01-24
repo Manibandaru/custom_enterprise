@@ -10,10 +10,10 @@ class Applicant(models.Model):
 
 
     experience = fields.Selection([('0','0-1'),('1','1-2'),('2','2-3'),('3','3-4'),('4','4-5'),('5','5+')],string='Experience')
-    education = fields.Selection([('school','School'),('higher_secondary','Higher Secondary'),('diplamo','Diploma'),('degree','Degree'),('post_graduate','Post Graduate')],string='Education')
-    visa_status=fields.Selection([('visit','Visit Visa'),('employed','Employment Visa'),('dependent','Depended Visa')],string='Visa Status')
+    education = fields.Selection([('school','School'),('higher_secondary','Higher Secondary'),('diploma','Diploma'),('degree','Degree'),('post_graduate','Post Graduate')],string='Education')
+    visa_status=fields.Selection([('student','Student Visa'),('visit','Visit Visa'),('employed','Employment Visa'),('dependent','Depended Visa')],string='Visa Status')
     availability= fields.Selection([('immediate','Immediate'),('10','10 Days'),('20','20 Days'),('30','30 Days')],string='Availability')
-    salary_exp = fields.Selection([('1000-2000','1,000 to 2,000'),('2000-3000','2 to 3'),('3000-5000','3 to 5'),('5000-10000','5 to 10'),('10000-15000','10 to 15'),('15000+','15+')],string='Expected Salary')
+    salary_exp = fields.Selection([('no_salary','No Salary'),('1000-2000','1,000 to 2,000'),('2000-3000','2 to 3'),('3000-5000','3 to 5'),('5000-10000','5 to 10'),('10000-15000','10 to 15'),('15000+','15+')],string='Expected Salary')
     nationality = fields.Many2one('res.country',string='Nationality')
     gender = fields.Selection([('male','Male'),('female','Female'),('other','Other')],string='Gender')
     emirate = fields.Selection([
@@ -58,6 +58,7 @@ class Applicant(models.Model):
 
 
                                     ],string='Internship Role')
+    description = fields.Text("Short Bio")
 
 
 
@@ -67,4 +68,4 @@ class hr_job_custom(models.Model):
     _inherit = "hr.job"
 
 
-    job_type = fields.Selection([('job','Job'),('internship','Intern'),('cv_droping','CV Drop In')])
+    job_type = fields.Selection([('job','Job'),('internship','Intern'),('cv_droping','CV Drop In')] ,required=True)

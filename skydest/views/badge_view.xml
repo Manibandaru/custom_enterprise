@@ -19,6 +19,34 @@
         <field name="dpi">110</field>
     </record>
 
+    <record id="hr_recruitment.hr_job_simple_form" model="ir.ui.view">
+        <field name="name">hr.job.simple.form</field>
+        <field name="model">hr.job</field>
+        <field name="priority">200</field>
+        <field name="arch" type="xml">
+            <form string="Create a Job Position">
+                <sheet>
+                    <group>
+                        <field name="name" class="oe_inline" placeholder="e.g. Sales Manager"/>
+                        <field name="job_type" class="oe_inline" required="1"/>
+                        <label for="alias_name" string="Application email" attrs="{'invisible': [('alias_domain', '=', False)]}" help="Define a specific contact address for this job position. If you keep it empty, the default email address will be used which is in human resources settings"/>
+                        <div name="alias_def" attrs="{'invisible': [('alias_domain', '=', False)]}">
+                            <field name="alias_id" class="oe_read_only" string="Email Alias" required="0"/>
+                            <div class="oe_edit_only" name="edit_alias">
+                                <field name="alias_name" class="oe_inline"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                            </div>
+                            <div class="text-muted" attrs="{'invisible': [('alias_domain', '=', False)]}">Applicants can send resume to this email address,<br/>it will create an application automatically</div>
+                        </div>
+                    </group>
+                    <footer>
+                        <button string="Create" name="close_dialog" type="object" class="btn-primary"/>
+                        <button string="Discard" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <!-- template use to render a Registration Badge -->
     <template id="event.event_registration_report_template_badge">
         <t t-call="web.basic_layout">
@@ -151,7 +179,7 @@
                                 <select name="education" t-attf-class="form-control o_website_form_input">
             <option value="school">School</option>
             <option value="higher_secondary">Higher Secondary</option>
-            <option value="diplamo">Diplamo</option>
+            <option value="diploma">Diploma</option>
             <option value="degree">Degree</option>
             <option value="post_graduate">Post Graduate</option>
         </select>
@@ -224,7 +252,8 @@
                             </div>
                             <div class="col-lg-7 col-md-8">
                                 <select name="visa_status" t-attf-class="form-control o_website_form_input">
-            <option value="visit">Visit</option>
+            <option value="student">Student Visa</option>
+                                    <option value="visit">Visit</option>
             <option value="employed">Employed</option>
             <option value="dependent">Dependent</option>
 
@@ -252,7 +281,8 @@
                             </div>
                             <div class="col-lg-7 col-md-8">
                                 <select name="salary_exp" t-attf-class="form-control o_website_form_input">
-            <option value="1000-2000">1000-2000</option>
+            <option value="no_salary">No Salary</option>
+                                    <option value="1000-2000">1000-2000</option>
             <option value="2000-3000">2000-3000</option>
             <option value="3000-5000">3000-5000</option>
             <option value="5000-10000">5000-10000</option>
@@ -315,7 +345,7 @@
                         </div>
                         <div class="form-group row form-field">
                             <div class="col-lg-3 col-md-4 text-right">
-                                <label class="col-form-label" for="description">Short Introduction</label>
+                                <label class="col-form-label" for="description">Short Bio</label>
                             </div>
                             <div class="col-lg-7 col-md-8">
                                 <textarea class="form-control o_website_form_input" name="description"></textarea>
@@ -334,7 +364,7 @@
 
 
 
-                        <div class="form-group row form-field o_website_form_custom">
+                        <div class="form-group row form-field o_website_form_required_custom">
                           <div class="col-lg-3 col-md-4 text-right">
                             <label class="col-form-label" for="Resume">Resume</label>
                           </div>
