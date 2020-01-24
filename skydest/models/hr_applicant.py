@@ -60,6 +60,31 @@ class Applicant(models.Model):
                                     ],string='Internship Role')
     description = fields.Text("Short Bio")
 
+    @api.model
+    def create(self, vals):
+        if vals.get('department_id') and not self._context.get('default_department_id'):
+            self = self.with_context(default_department_id=vals.get('department_id'))
+        if vals.get('job_id') or self._context.get('default_job_id'):
+            job_id = vals.get('job_id') or self._context.get('default_job_id')
+            for key, value in self._onchange_job_id_internal(job_id)['value'].items():
+                if key not in vals:
+                    vals[key] = value
+        if vals.get('user_id'):
+            vals['date_open'] = fields.Datetime.now()
+        if 'stage_id' in vals:
+            vals.update(self._onchange_stage_id_internal(vals.get('stage_id'))['value'])
+        if 'email_from' in vals:
+            mail_content = "  Hello Your Application is Successfully Submitted . Thank you "
+            main_content = {
+                'subject': "Application Submitted",
+                'author_id': self.env.user.partner_id.id,
+                'body_html': mail_content,
+                'email_to':(vals.get('email_from'))
+            }
+
+            self.env['mail.mail'].create(main_content).send()
+        return super(Applicant, self.with_context(mail_create_nolog=True)).create(vals)
+
 
 
 
