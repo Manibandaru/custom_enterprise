@@ -12,7 +12,7 @@ class Applicant(models.Model):
     experience = fields.Selection([('0','0-1'),('1','1-2'),('2','2-3'),('3','3-4'),('4','4-5'),('5','5+')],string='Experience')
     education = fields.Selection([('school','School'),('higher_secondary','Higher Secondary'),('diploma','Diploma'),('degree','Degree'),('post_graduate','Post Graduate')],string='Education')
     visa_status=fields.Selection([('student','Student Visa'),('visit','Visit Visa'),('employed','Employment Visa'),('dependent','Depended Visa')],string='Visa Status')
-    availability= fields.Selection([('immediate','Immediate'),('10','10 Days'),('20','20 Days'),('30','30 Days')],string='Availability')
+    availability= fields.Selection([('immediate','Immediate'),('30','30 Days'),('60','60 Days'),('90','90 Days')],string='Availability')
     salary_exp = fields.Selection([('no_salary','No Salary'),('1000-2000','1,000 to 2,000'),('2000-3000','2 to 3'),('3000-5000','3 to 5'),('5000-10000','5 to 10'),('10000-15000','10 to 15'),('15000+','15+')],string='Expected Salary')
     nationality = fields.Many2one('res.country',string='Nationality')
     gender = fields.Selection([('male','Male'),('female','Female'),('other','Other')],string='Gender')
@@ -83,7 +83,16 @@ class Applicant(models.Model):
         if 'stage_id' in vals:
             vals.update(self._onchange_stage_id_internal(vals.get('stage_id'))['value'])
         if 'email_from' in vals:
-            mail_content = "  Hello Your Application is Successfully Submitted . Thank you "
+            mail_content = """ 
+            Thank you for interest in Skydest Career Expo 2.0 and for registering with SkyDest.
+
+We're currently in the process of taking applications for this position.
+We will begin taking interviews soon and you will be notified if you are selected to continue to the interview process by our human resources department.
+
+Thank you,
+Skydest Team
+            
+            """
             main_content = {
                 'subject': "Application Submitted",
                 'author_id': self.env.user.partner_id.id,

@@ -59,12 +59,7 @@
                                 <div class="text-center">
                                     <img t-att-src="'/skydest/static/comeonkerala.jpeg'" style="max-height:5cm; max-width:8cm;"/>
                                     <img t-att-src="'/skydest/static/skydest.jpeg'" style="max-height:5cm; max-width:8cm;"/>
-<!--                                    <t t-if="o.event_id.event_logo">-->
-<!--                                        <div t-field="o.event_id.event_logo"/>-->
-<!--                                    </t>-->
-<!--                                    <span t-if="not o.event_id.event_logo and o.event_id.organizer_id.company_id.logo_web and o.event_id.organizer_id.is_company">-->
-<!--                                        <img t-att-src="image_data_uri(o.event_id.organizer_id.company_id.logo_web)" style="max-height:8cm; max-width:8cm;" alt="Logo"/>-->
-<!--                                    </span>-->
+                                    <br/>
                                     <h5 t-field="o.event_id.name"/>
                                     <h5>( <i class="fa fa-clock-o" aria-label="Period" role="img" title="Period"></i> <span itemprop="startDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_begin" t-options='{"hide_seconds": True}'> </span> <i>to</i> <span itemprop="endDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_end" t-options='{"hide_seconds": True}'> </span> )</h5>
                                 </div>
@@ -75,8 +70,10 @@
                                         </small>
                                     </div>
                                 </div>
-                                <img t-att-src="'/skydest/static/comeonkerala1.jpeg'" style="max-height:4cm; max-width:8cm;"/>
-                                <img t-att-src="'/skydest/static/gulf.jpeg'" style="max-height:4cm; max-width:8cm;"/>
+
+                                <img t-att-src="'/skydest/static/a2nsoft2.jpeg'" style="max-height:5cm; max-width:6cm;"/>
+
+                                <img t-att-src="'/skydest/static/gulf.jpeg'" style="max-height:5cm; max-width:6cm;"/>
 
                             </div>
                         </div>
@@ -129,9 +126,9 @@
         <t t-set="additional_title">Apply Job</t>
 
         <div id="wrap"  class="container">
-            <h1 class="text-center mt-2">
-                Job Application Form
-            </h1>
+<!--            <h1 class="text-center mt-2">-->
+<!--                Job Application Form-->
+<!--            </h1>-->
             <h2 t-if="job" class="text-center text-muted">
                 <span t-field="job.name"/>
             </h2>
@@ -217,7 +214,7 @@
                         </div>
 
 
-                        <div t-if="job.job_type in ('internship','job')" class="form-group row form-field o_website_form_required_custom">
+                        <div class="form-group row form-field o_website_form_required_custom">
                             <div  class="col-lg-3 col-md-4 text-right">
                                 <label class="col-form-label" for="intern_role">Job/Internship Role</label>
                             </div>
@@ -267,7 +264,7 @@
                                 <select name="visa_status" t-attf-class="form-control o_website_form_input">
             <option value="student">Student Visa</option>
                                     <option value="visit">Visit</option>
-            <option value="employed">Employed</option>
+            <option value="employed">Employement</option>
             <option value="dependent">Dependent</option>
 
         </select>
@@ -281,9 +278,9 @@
                             <div class="col-lg-7 col-md-8">
                                <select name="availability" t-attf-class="form-control o_website_form_input">
             <option value="immediate">Immediate</option>
-            <option value="10">10 Days</option>
-            <option value="20">20 Days</option>
             <option value="30">30 Days</option>
+            <option value="60">60 Days</option>
+            <option value="90">90 Days</option>
         </select>
                             </div>
                         </div>
@@ -404,7 +401,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row form-field">
+                        <div class="form-group row form-field o_website_form_required_custom">
                             <div class="col-lg-3 col-md-4 text-right">
                                 <label class="col-form-label" for="description">Cover Letter</label>
                             </div>
@@ -430,7 +427,7 @@
                             <label class="col-form-label" for="Resume">Resume (attach pdf file)</label>
                           </div>
                           <div class="col-lg-7 col-md-8">
-                            <input type="file" class="form-control o_website_form_input" name="Resume"/>
+                            <input type="file" class="form-control o_website_form_input" name="Resume" required=""/>
                           </div>
                         </div>
 
@@ -439,7 +436,7 @@
                             <label class="col-form-label" for="Resume">Resume (attach pdf file)</label>
                           </div>
                           <div class="col-lg-7 col-md-8">
-                            <input type="file" class="form-control o_website_form_input" name="Resume"/>
+                            <input type="file" class="form-control o_website_form_input" name="Resume" required=""/>
                           </div>
                         </div>
 
