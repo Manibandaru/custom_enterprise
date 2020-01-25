@@ -51,6 +51,7 @@ class Applicant(models.Model):
                                     ('events', 'Promotions and events'),
                                     ('research', 'Research'),
                                     ('journalism', 'Journalism and writing'),
+                                    ('other', 'Others'),
 
 
 
@@ -58,7 +59,15 @@ class Applicant(models.Model):
 
 
                                     ],string='Internship Role')
-    description = fields.Text("Short Bio")
+    description = fields.Text("Cover Letter")
+    whatsapp = fields.Char('WhatsApp Number')
+    availability_intern = fields.Selection([('immediate','Immediate'),
+                                            ('0-3','0-3 Months'),('3-6','3-6 Months'),('6-12','6-12 Months')
+
+                                            ] , string='Intern Availability')
+    previous_emp = fields.Char('Previous Employer')
+    certification = fields.Char('Certifications')
+
 
     @api.model
     def create(self, vals):
