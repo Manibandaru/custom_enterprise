@@ -57,23 +57,41 @@
                         <div class=" text-center" >
                             <div>
                                 <div class="text-center">
-                                    <img t-att-src="'/skydest/static/comeonkerala.jpeg'" style="max-height:5cm; max-width:8cm;"/>
-                                    <img t-att-src="'/skydest/static/skydest.jpeg'" style="max-height:5cm; max-width:8cm;"/>
-                                    <br/>
-                                    <h5 t-field="o.event_id.name"/>
-                                    <h5>( <i class="fa fa-clock-o" aria-label="Period" role="img" title="Period"></i> <span itemprop="startDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_begin" t-options='{"hide_seconds": True}'> </span> <i>to</i> <span itemprop="endDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_end" t-options='{"hide_seconds": True}'> </span> )</h5>
+                                    <img t-att-src="'/skydest/static/comeonkerala.png'" style="max-height:4cm; max-width:8cm;float:left"/>
+                                    <img t-att-src="'/skydest/static/skydest.png'" style="max-height:4cm; max-width:8cm;float:right"/>
+
+<!--                                    <h5 t-field="o.event_id.name"/>-->
+<!--                                    <h5>( <i class="fa fa-clock-o" aria-label="Period" role="img" title="Period"></i> <span class="bold" style="color:blue" itemprop="startDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_begin" t-options='{"hide_seconds": True}'> </span> <i>to</i> <span itemprop="endDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_end" t-options='{"hide_seconds": True}'> </span> )</h5>-->
                                 </div>
-                                <div>
-                                    <div class=" text-center" id="o_event_name">
+                                <div style="border:1px solid #9a1d63;padding:15px 0 0 0;border-radius:30px 30px 0px 0px;clear:both">
+                                    <div>
+                                        <h5 t-field="o.event_id.name"/>
+                                        <h5>( <i class="fa fa-clock-o" aria-label="Period" role="img" title="Period"></i> <span class="bold" style="color:blue;font-weight:700" itemprop="startDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_begin" t-options='{"hide_seconds": True}'> </span> <i>TO</i> <span class="bold" style="color:blue;font-weight:700" itemprop="endDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_end" t-options='{"hide_seconds": True}'> </span> )</h5>
+                                    </div>
+                                    <div style="padding-bottom:10px" class=" text-center" id="o_event_name">
                                         <small>
                                             <h3 t-field="o.name"/>
                                         </small>
                                     </div>
+                                    <div style="background-color:#9a1d63;padding:10px">
+                                        <h3 style="text-transform:uppercase;letter-spacing:2px;font-weight:700;color:#fbfbfb">Participant</h3>
+                                    </div>
                                 </div>
+                                <div >
+<!--                                    <div class="">-->
+<!--                                        <span class="d-block">Registration Partner</span>-->
+<!--                                        <img t-att-src="'/skydest/static/a2nsoft.png'" style="max-height:5cm; max-width:5cm;"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="">-->
+<!--                                        <span class="d-block">An Initiative By</span>-->
+<!--                                       <img t-att-src="'/skydest/static/madhyamam.png'" style="max-height:5cm; max-width:6cm;"/>-->
+<!--                                    </div>-->
+                                    <img t-att-src="'/skydest/static/image.jpg'" style=" width:100%;max-width:100%;"/>
 
-                                <img t-att-src="'/skydest/static/a2nsoft2.jpeg'" style="max-height:5cm; max-width:6cm;"/>
+                                 </div>
 
-                                <img t-att-src="'/skydest/static/gulf.jpeg'" style="max-height:5cm; max-width:6cm;"/>
+
+
 
                             </div>
                         </div>
@@ -427,7 +445,7 @@
                             <label class="col-form-label" for="Resume">Resume (attach pdf file)</label>
                           </div>
                           <div class="col-lg-7 col-md-8">
-                            <input type="file" class="form-control o_website_form_input" name="Resume" required=""/>
+                            <input type="file" class="form-control o_website_form_input" name="Resume" />
                           </div>
                         </div>
 
