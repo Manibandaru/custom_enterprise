@@ -58,7 +58,7 @@
                             <div>
                                 <div class="text-center">
                                     <img t-att-src="'/skydest/static/comeonkerala.png'" style="max-height:4cm; max-width:8cm;float:left"/>
-                                    <img t-att-src="'/skydest/static/skydest.png'" style="max-height:4cm; max-width:8cm;float:right"/>
+                                    <img t-att-src="'/skydest/static/infinity.jpeg'" style="max-height:4cm; max-width:8cm;float:right"/>
 
 <!--                                    <h5 t-field="o.event_id.name"/>-->
 <!--                                    <h5>( <i class="fa fa-clock-o" aria-label="Period" role="img" title="Period"></i> <span class="bold" style="color:blue" itemprop="startDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_begin" t-options='{"hide_seconds": True}'> </span> <i>to</i> <span itemprop="endDate" t-field="o.event_id.with_context(tz=o.event_id.date_tz).date_end" t-options='{"hide_seconds": True}'> </span> )</h5>-->
