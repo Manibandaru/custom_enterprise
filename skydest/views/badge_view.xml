@@ -502,7 +502,9 @@
                 'availability_intern',
                 'previous_emp',
                 'certification',
-                'intern_role'
+                'intern_role',
+                'university',
+                'course'
 
 
             ]"/>
