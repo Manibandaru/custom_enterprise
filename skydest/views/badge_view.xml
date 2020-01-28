@@ -501,7 +501,8 @@
                 'year_of_study',
                 'availability_intern',
                 'previous_emp',
-                'certification'
+                'certification',
+                'intern_role'
 
 
             ]"/>
