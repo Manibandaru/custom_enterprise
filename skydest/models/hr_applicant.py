@@ -100,7 +100,7 @@ Skydest Team
                 'email_to':(vals.get('email_from'))
             }
 
-            self.env['mail.mail'].create(main_content).send()
+            #self.env['mail.mail'].create(main_content).send()
         return super(Applicant, self.with_context(mail_create_nolog=True)).create(vals)
 
 
