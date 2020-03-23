@@ -72,6 +72,27 @@
             </field>
         </record>
 
+
+         <record id="so_job_checklist_search_view" model="ir.ui.view">
+            <field name="name">so.job.checklist.search.view</field>
+            <field name="model">so.checklist</field>
+            <field name="arch" type="xml">
+                <search string="Search Checklist">
+                    <field name="sale_order_id" string="Job Number" filter_domain="[('sale_order_id','ilike',self)]"/>
+                    <field name="so_partner" string="Customer" filter_domain="[('so_partner', 'child_of', self)]"/>
+                    <field name="bl_number" string="BL Number" filter_domain="[('bl_number', 'ilike', self)]"/>
+                    <field name="container_no" string="Container Number" filter_domain="[('container_no', 'ilike', self)]"/>
+                    <field name="so_partner" operator="child_of"/>
+<!--                    <field name="date" string="Period"/>-->
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_partner_id" string="Partner" context="{'group_by':'so_partner'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+
+
         <record id="action_so_checklist_report_form" model="ir.actions.act_window">
             <field name="name">SO Checklist Report</field>
             <field name="res_model">so.checklist</field>
@@ -79,6 +100,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="target">current</field>
+            <field name="search_view_id" ref="so_job_checklist_search_view"/>
         </record>
 
 

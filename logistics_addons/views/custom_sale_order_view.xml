@@ -23,6 +23,12 @@
             <xpath expr="//button[@name='action_unlock']" position="after">
                 <button name="create_purchase_invoice" type="object" string="CREATE VENDOR BILL" states="sale"/>
             </xpath>
+
+            <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="container_no" />
+            </xpath>
+
+
         </field>
     </record>
 
