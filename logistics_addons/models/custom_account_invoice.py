@@ -7,3 +7,5 @@ class CustomAccountInvoice(models.Model):
 
 
 	job_number = fields.Many2one('sale.order' , string='Job Number')
+	bl_number = fields.Char(string='BL Number')
+	container_no = fields.Char(string='Conatiner No')

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    invoice_supplier_form-->
+
+    <record id="customer_bill_container_num_view" model="ir.ui.view">
+        <field name="name">customer.bill.container.num.view</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="job_number" />
+                <field name="bl_number"/>
+                <field name="container_no"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
