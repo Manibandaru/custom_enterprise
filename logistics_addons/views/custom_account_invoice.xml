@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!--    invoice_supplier_form-->
+    <!--    invoice_customer_form-->
 
     <record id="customer_bill_container_num_view" model="ir.ui.view">
         <field name="name">customer.bill.container.num.view</field>

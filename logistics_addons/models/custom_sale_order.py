@@ -10,6 +10,7 @@ class SaleOrder(models.Model):
 	job_type = fields.Many2one('so.job.type', string='Job Type')
 	client_order_ref = fields.Char(string='BL Number', copy=False )
 	container_no = fields.Char(string='Container Number')
+	purchase_lines = fields.One2many('account.invoice.line','job_number')
 
 	@api.model
 	def create(self, vals):
