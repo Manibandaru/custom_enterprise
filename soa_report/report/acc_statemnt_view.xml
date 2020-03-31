@@ -83,6 +83,8 @@
                                 <th style="text-align:center">Date</th>
                                 <th style="text-align:center">Due Date</th>
                                 <th style="text-align:center">Job Number</th>
+                                <th style="text-align:center">BL Number</th>
+                                <th style="text-align:center">Container Number</th>
                                 <th style="text-align:center">Communication</th>
 <!--                                <th >Due</th>-->
 <!--                                <th >Paid</th>-->
@@ -118,6 +120,13 @@
                                 <span t-esc="line['origin']"/>
                             </td>
                             <td  style="text-align:center">
+                                <span t-esc="line['bl_no']"/>
+                            </td>
+                            <td  style="text-align:center">
+                                <span t-esc="line['container_no']"/>
+                            </td>
+
+                            <td  style="text-align:center">
                                 <t t-if="line['name'] != '/'"><span t-esc="line['name']"/></t>
                                 <span t-esc="line['ref']"/>
                             </td>
@@ -132,7 +141,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4"></td>
+                            <td colspan="6"></td>
                             <td><strong>Subtotal :</strong></td>
                             <td style="text-align:right"><span t-esc="Totals[o.id][currency]['amount']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
 <!--                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>-->
@@ -141,7 +150,7 @@
                         </tr>
 
                         <tr>
-                            <td colspan="4"></td>
+                            <td colspan="6"></td>
                             <td><strong>Total OverDue :</strong></td>
                             <td style="text-align:right">
                                 <span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>

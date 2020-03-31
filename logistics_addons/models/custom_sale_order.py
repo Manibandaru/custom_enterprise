@@ -2,15 +2,25 @@
 from odoo import fields, models,api,_
 from odoo.fields import Date
 from odoo.exceptions import UserError, ValidationError
+import datetime
+
+
 
 class SaleOrder(models.Model):
 	_inherit = "sale.order"
 
 
 	job_type = fields.Many2one('so.job.type', string='Job Type')
-	client_order_ref = fields.Char(string='BL Number', copy=False )
-	container_no = fields.Char(string='Container Number')
+	client_order_ref = fields.Char(string='Cust Ref / Container Num', copy=False ,required=True )
+	bl_no = fields.Char(string='B L Number', required=True)
 	purchase_lines = fields.One2many('account.invoice.line','job_number')
+
+	_sql_constraints = [
+		('blno_unique', 'unique(bl_no)', 'This BL Number already Exists - it has to be unique!') ,
+		('client_order_ref_unique', 'unique(client_order_ref)',
+		 'This Container Number already Exists - it has to be unique!')
+		]
+
 
 	@api.model
 	def create(self, vals):
@@ -25,13 +35,20 @@ class SaleOrder(models.Model):
 
 
 		if vals['company_id']:
+
+			current_year = int(datetime.datetime.now().year)
+			print("Current Year",current_year)
+
 			company = self.env['res.company'].search([('id','=',vals['company_id'])])
 			if company.logistic_company :
 				company_code = company.short_code
 				if vals['job_type']:
 					job_type = self.env['so.job.type'].search([('id', '=', vals['job_type'])])
 					job_code =  job_type.code
-					vals['name'] = company_code + '/' + job_code + '/' + vals['name']
+					# vals['name'] = company_code + '/' + job_code + '/' + vals['name']
+
+					vals['name'] =  vals['name'] +  '/' + job_code + '/' + str(current_year)
+
 				else:
 					vals['name'] = company_code + '/' + vals['name']
 

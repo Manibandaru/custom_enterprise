@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <-->
+
+
+
+        <template id="report_invoice_document_inherit_container" inherit_id="account.report_invoice_document">
+        <!-- HTML Preview for mobile responsive -->
+        <xpath expr="//div[@id='informations']" position="after">
+
+            <div id="container_informations" class="row mt32 mb32">
+
+                        <div class="col-auto mw-100 mb-2" t-if="o.job_number.name and o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')" name="job_number">
+                            <strong>JOB NUMBER:</strong>
+                            <p class="m-0" t-field="o.job_number.name"/>
+                        </div>
+                        <div class="col-auto mw-100 mb-2" t-if="o.bl_number" name="bl_number">
+                            <strong>BL NUMBER:</strong>
+                            <p class="m-0" t-field="o.bl_number"/>
+                        </div>
+                        <div class="col-auto mw-100 mb-2" t-if="o.container_no" name="container_no">
+                            <strong>CONTAINER NUMBER:</strong>
+                            <p class="m-0" t-field="o.container_no"/>
+                        </div>
+
+                    </div>
+
+
+        </xpath>
+    </template>
+
+
+    </data>
+</odoo>

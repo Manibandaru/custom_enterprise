@@ -36,7 +36,7 @@ class ReportOverdue(models.AbstractModel):
             vals =[]
             for l in amls:
                 #print(l.amount_residual_currency if l.currency_id else l.amount_residual)
-                dict={'move_id':l.move_id.name,'name':l.name, 'date':l.date ,'date_maturity':  l.date_maturity , 'origin':l.invoice_id.origin , 'ref':l.ref , 'credit':l.credit, 'debit':l.debit, 'amount':l.amount_residual_currency if l.currency_id else l.amount_residual ,
+                dict={'move_id':l.move_id.name,'name':l.name, 'date':l.date ,'date_maturity':  l.date_maturity , 'origin':l.invoice_id.origin ,'bl_no':l.invoice_id.bl_number,'container_no':l.invoice_id.container_no, 'ref':l.ref , 'credit':l.credit, 'debit':l.debit, 'amount':l.amount_residual_currency if l.currency_id else l.amount_residual ,
                      'payment_id':l.payment_id, 'currency_id':l.currency_id , 'amount_currency':l.amount_currency , 'mat':(l.amount_residual_currency if l.currency_id else l.amount_residual) if l.date_maturity < fields.date.today() else 0 , 'blocked':l.blocked }
                 vals.append(dict)
 
@@ -450,6 +450,7 @@ class ReportPartnerLedger(models.AbstractModel):
             {'name': _('Ref')},
             {'name': _('Due Date'), 'class': 'date'},
             {'name': _('Matching Number')},
+            {'name': _('JOB Number')},
             {'name': _('BL Number')},
             {'name': _('Container Number')},
             {'name': _('Initial Balance'), 'class': 'number'},
@@ -605,7 +606,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     'trust': partner.trust,
                     'unfoldable': True,
                     'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
-                    'colspan': 8,
+                    'colspan': 9,
                 })
             user_company = self.env.user.company_id
             used_currency = user_company.currency_id
@@ -633,6 +634,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     line_debit = line_currency._convert(line_debit, used_currency, user_company, date)
                     line_credit = line_currency._convert(line_credit, used_currency, user_company, date)
                     line_bl_number = line.invoice_id.bl_number or None
+                    line_job_number = line.invoice_id.job_number.name or None
                     line_container_no = line.invoice_id.container_no or None
                     progress_before = progress
                     progress = progress + line_debit - line_credit
@@ -643,7 +645,7 @@ class ReportPartnerLedger(models.AbstractModel):
                         caret_type = 'account.payment'
                     domain_columns = [line.journal_id.code, line.account_id.code, self._format_aml_name(line),
                                       line.date_maturity and format_date(self.env, line.date_maturity) or '',
-                                      line.full_reconcile_id.name or '', line_bl_number,line_container_no,self.format_value(progress_before),
+                                      line.full_reconcile_id.name or '', line_job_number,line_bl_number,line_container_no,self.format_value(progress_before),
                                       line_debit != 0 and self.format_value(line_debit) or '',
                                       line_credit != 0 and self.format_value(line_credit) or '']
                     if self.user_has_groups('base.group_multi_currency'):
@@ -670,7 +672,7 @@ class ReportPartnerLedger(models.AbstractModel):
                         'class': 'o_account_reports_load_more text-center',
                         'parent_id': 'partner_%s' % partner.id,
                         'name': _('Load more... (%s remaining)') % remaining_lines,
-                        'colspan': 12 if self.user_has_groups('base.group_multi_currency') else 10,
+                        'colspan': 13 if self.user_has_groups('base.group_multi_currency') else 11,
                         'columns': [{}],
                     })
                 lines += domain_lines

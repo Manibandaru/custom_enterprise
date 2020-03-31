@@ -15,7 +15,9 @@
         'views/so_job_type_view.xml',
         'views/custom_sale_order_view.xml',
         'views/custom_res_company_view.xml',
-        'views/custom_account_invoice.xml'
+        'views/custom_account_invoice.xml',
+        'views/custom_res_partner.xml',
+        'views/invoice_report_custom.xml',
 
 
     ],
