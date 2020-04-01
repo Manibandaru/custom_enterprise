@@ -17,7 +17,7 @@
         'views/custom_res_company_view.xml',
         'views/custom_account_invoice.xml',
         'views/custom_res_partner.xml',
-        'views/invoice_report_custom.xml',
+        #'views/invoice_report_custom.xml',
 
 
     ],

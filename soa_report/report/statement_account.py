@@ -452,7 +452,7 @@ class ReportPartnerLedger(models.AbstractModel):
             {'name': _('Matching Number')},
             {'name': _('JOB Number')},
             {'name': _('BL Number')},
-            {'name': _('Container Number')},
+            {'name': _('Description')},
             {'name': _('Initial Balance'), 'class': 'number'},
             {'name': _('Debit'), 'class': 'number'},
             {'name': _('Credit'), 'class': 'number'}]
