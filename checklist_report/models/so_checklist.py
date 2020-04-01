@@ -42,8 +42,8 @@ class so_checklist(models.Model):
             if record.sale_order_id:
                 record.so_date = record.sale_order_id.confirmation_date
                 record.so_partner =record.sale_order_id.partner_id
-                record.bl_number = record.sale_order_id.client_order_ref
-                record.container_no = record.sale_order_id.container_no
+                record.bl_number = record.sale_order_id.bl_no
+                record.container_no = record.sale_order_id.client_order_ref
                 if record.sale_order_id.job_type:
                     record.job_type = record.sale_order_id.job_type.id
 

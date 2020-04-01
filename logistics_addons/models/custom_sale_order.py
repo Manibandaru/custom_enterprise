@@ -12,8 +12,10 @@ class SaleOrder(models.Model):
 
 	job_type = fields.Many2one('so.job.type', string='Job Type')
 	client_order_ref = fields.Char(string='Cust Ref / Container Num', copy=False ,required=True )
-	bl_no = fields.Char(string='B L Number', required=True)
+	bl_no = fields.Char(string='B L Number')
 	purchase_lines = fields.One2many('account.invoice.line','job_number')
+	job_created_by = fields.Many2one('hr.employee', string='Job Created By')
+
 
 	_sql_constraints = [
 		('blno_unique', 'unique(bl_no)', 'This BL Number already Exists - it has to be unique!') ,
@@ -133,8 +135,8 @@ class SaleOrder(models.Model):
 			'user_id': self.user_id and self.user_id.id,
 			'team_id': self.team_id.id,
 			'transaction_ids': [(6, 0, self.transaction_ids.ids)],
-			'bl_number': self.client_order_ref,
-			'container_no': self.container_no,
+			'bl_number': self.bl_no,
+			'container_no': self.client_order_ref,
 			'job_number':self.id,
 
 		}
