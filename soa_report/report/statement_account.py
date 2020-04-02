@@ -462,6 +462,13 @@ class ReportPartnerLedger(models.AbstractModel):
 
         columns.append({'name': _('Balance'), 'class': 'number'})
 
+        print('columns',self.env.context)
+        if self.env.context.get('print_mode'):
+            columns = columns[:2] + columns[3:5] + columns[6:9] + columns[10:]
+            columns.append({'name': _(''), 'class': 'number'})
+            columns.append({'name': _(''), 'class': 'number'})
+            columns.append({'name': _(''), 'class': 'number'})
+
         return columns
 
     def _set_context(self, options):
@@ -593,6 +600,9 @@ class ReportPartnerLedger(models.AbstractModel):
             total_credit += credit
             total_balance += balance
             columns = [self.format_value(initial_balance), self.format_value(debit), self.format_value(credit)]
+            if self.env.context.get('print_mode'):
+                columns = [ self.format_value(debit), self.format_value(credit)]
+
             if self.user_has_groups('base.group_multi_currency'):
                 columns.append('')
             columns.append(self.format_value(balance))
@@ -606,7 +616,7 @@ class ReportPartnerLedger(models.AbstractModel):
                     'trust': partner.trust,
                     'unfoldable': True,
                     'unfolded': 'partner_' + str(partner.id) in options.get('unfolded_lines') or unfold_all,
-                    'colspan': 9,
+                    'colspan': 7 if self.env.context.get('print_mode') else 9,
                 })
             user_company = self.env.user.company_id
             used_currency = user_company.currency_id
@@ -653,6 +663,8 @@ class ReportPartnerLedger(models.AbstractModel):
                     domain_columns.append(self.format_value(progress))
                     columns = [{'name': v} for v in domain_columns]
                     columns[3].update({'class': 'date'})
+                    if self.env.context.get('print_mode'):
+                        columns = columns[:1] + columns[2:4] + columns[5:8] + columns[9:]
                     domain_lines.append({
                         'id': line.id,
                         'parent_id': 'partner_' + str(partner.id),
@@ -678,7 +690,9 @@ class ReportPartnerLedger(models.AbstractModel):
                 lines += domain_lines
 
         if not line_id:
-            total_columns = ['', '', '', '', '', self.format_value(total_initial_balance), self.format_value(total_debit), self.format_value(total_credit)]
+            total_columns = ['', '', '', '', '','','','', self.format_value(total_initial_balance), self.format_value(total_debit), self.format_value(total_credit)]
+            if self.env.context.get('print_mode'):
+                total_columns = total_columns[2:8] + total_columns[9:]
             if self.user_has_groups('base.group_multi_currency'):
                 total_columns.append('')
             total_columns.append(self.format_value(total_balance))
@@ -689,6 +703,7 @@ class ReportPartnerLedger(models.AbstractModel):
                 'class': 'o_account_reports_domain_total',
                 'columns': [{'name': v} for v in total_columns],
             })
+
         return lines
 
     @api.model
