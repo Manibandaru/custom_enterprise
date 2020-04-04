@@ -88,6 +88,7 @@
                                 <th style="text-align:center">Communication</th>
 <!--                                <th >Due</th>-->
 <!--                                <th >Paid</th>-->
+                                <th style="text-align:center">Invoice Value</th>
                                 <th style="text-align:center">Amount Due</th>
                             </tr>
                         </thead>
@@ -137,11 +138,15 @@
 <!--                                <span t-esc="line['credit']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>-->
 <!--                            </td>-->
                             <td style="text-align:right">
+                                <span t-esc="line['invoice_amount']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                            </td>
+                            <td style="text-align:right">
                                 <span t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                             </td>
+
                         </tr>
                         <tr>
-                            <td colspan="6"></td>
+                            <td colspan="7"></td>
                             <td><strong>Subtotal :</strong></td>
                             <td style="text-align:right"><span t-esc="Totals[o.id][currency]['amount']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
 <!--                            <td style="text-align:right"><span t-esc="Totals[o.id][currency]['paid']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>-->
@@ -150,7 +155,7 @@
                         </tr>
 
                         <tr>
-                            <td colspan="6"></td>
+                            <td colspan="7"></td>
                             <td><strong>Total OverDue :</strong></td>
                             <td style="text-align:right">
                                 <span t-esc="Totals[o.id][currency]['mat']" t-options="{'widget': 'monetary', 'display_currency': currency}"/>

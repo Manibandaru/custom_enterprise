@@ -8,7 +8,7 @@ class ReportOverdue(models.AbstractModel):
 
     def _get_account_move_lines(self, partner_ids):
         res = {x: [] for x in partner_ids}
-        self.env.cr.execute("SELECT m.name AS move_id, l.date,ai.origin , l.name, l.ref, l.date_maturity, l.partner_id, l.blocked, l.amount_currency, l.currency_id, "
+        self.env.cr.execute("SELECT m.name AS move_id, l.date,ai.origin,ai.amount_total AS invoice , l.name, l.ref, l.date_maturity, l.partner_id, l.blocked, l.amount_currency, l.currency_id, "
             "CASE WHEN at.type = 'receivable' "
                 "THEN SUM(l.debit) "
                 "ELSE SUM(l.credit * -1) "
@@ -25,7 +25,7 @@ class ReportOverdue(models.AbstractModel):
             "JOIN account_account_type at ON (l.user_type_id = at.id) "
             "JOIN account_move m ON (l.move_id = m.id) "
             "LEFT JOIN account_invoice ai ON (l.invoice_id = ai.id)"
-            "WHERE l.partner_id IN %s AND at.type IN ('receivable', 'payable') AND l.full_reconcile_id IS NULL GROUP BY l.date, l.name, l.ref, l.date_maturity, l.partner_id, at.type, l.blocked, l.amount_currency, l.currency_id, l.move_id, m.name,ai.origin", (((fields.date.today(), ) + (tuple(partner_ids),))))
+            "WHERE l.partner_id IN %s AND at.type IN ('receivable', 'payable') AND l.full_reconcile_id IS NULL GROUP BY l.date, l.name, l.ref, l.date_maturity, l.partner_id, at.type, l.blocked, l.amount_currency, l.currency_id, l.move_id, m.name,ai.origin,ai.amount_total", (((fields.date.today(), ) + (tuple(partner_ids),))))
         for row in self.env.cr.dictfetchall():
             res[row.pop('partner_id')].append(row)
         #print("partner_idspartner_ids",partner_ids)
@@ -36,7 +36,7 @@ class ReportOverdue(models.AbstractModel):
             vals =[]
             for l in amls:
                 #print(l.amount_residual_currency if l.currency_id else l.amount_residual)
-                dict={'move_id':l.move_id.name,'name':l.name, 'date':l.date ,'date_maturity':  l.date_maturity , 'origin':l.invoice_id.origin ,'bl_no':l.invoice_id.bl_number,'container_no':l.invoice_id.container_no, 'ref':l.ref , 'credit':l.credit, 'debit':l.debit, 'amount':l.amount_residual_currency if l.currency_id else l.amount_residual ,
+                dict={'move_id':l.move_id.name,'name':l.name, 'date':l.date ,'date_maturity':  l.date_maturity , 'origin':l.invoice_id.origin ,'bl_no':l.invoice_id.bl_number,'container_no':l.invoice_id.container_no, 'ref':l.ref , 'credit':l.credit, 'debit':l.debit,'invoice_amount': l.invoice_id.amount_total if l.invoice_id else 0.0 , 'amount':l.amount_residual_currency if l.currency_id else l.amount_residual ,
                      'payment_id':l.payment_id, 'currency_id':l.currency_id , 'amount_currency':l.amount_currency , 'mat':(l.amount_residual_currency if l.currency_id else l.amount_residual) if l.date_maturity < fields.date.today() else 0 , 'blocked':l.blocked }
                 vals.append(dict)
 
