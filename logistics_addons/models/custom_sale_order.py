@@ -18,9 +18,7 @@ class SaleOrder(models.Model):
 
 
 	_sql_constraints = [
-		('blno_unique', 'unique(bl_no)', 'This BL Number already Exists - it has to be unique!') ,
-		('client_order_ref_unique', 'unique(client_order_ref)',
-		 'This Container Number already Exists - it has to be unique!')
+		('blno_unique', 'unique(bl_no)', 'This BL Number already Exists - it has to be unique!') 
 		]
 
 
