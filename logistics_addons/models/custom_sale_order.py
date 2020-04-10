@@ -14,11 +14,11 @@ class SaleOrder(models.Model):
 	client_order_ref = fields.Char(string='Cust Ref / Container Num', copy=False ,required=True )
 	bl_no = fields.Char(string='B L Number')
 	purchase_lines = fields.One2many('account.invoice.line','job_number')
-	job_created_by = fields.Many2one('hr.employee', string='Job Created By')
+	job_created_by = fields.Many2one('hr.employee', string='Job Created By' , required=True)
 
 
 	_sql_constraints = [
-		('blno_unique', 'unique(bl_no)', 'This BL Number already Exists - it has to be unique!') 
+		('blno_unique', 'unique(bl_no)', 'This BL Number already Exists - it has to be unique!')
 		]
 
 
