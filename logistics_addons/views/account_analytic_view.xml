@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    analytic account grouping-->
+
+    <record id="account_analytic_group_custom_view" model="ir.ui.view">
+        <field name="name">account.analytic.group.custom.view</field>
+        <field name="model">account.analytic.group</field>
+        <field name="inherit_id" ref="analytic.account_analytic_group_form_view"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="start_date" />
+                <field name="end_date"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

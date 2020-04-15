@@ -18,6 +18,7 @@
         'views/custom_account_invoice.xml',
         'views/custom_res_partner.xml',
         #'views/invoice_report_custom.xml',
+        'views/account_analytic_view.xml',
 
 
     ],

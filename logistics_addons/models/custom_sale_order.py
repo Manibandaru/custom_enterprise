@@ -52,12 +52,18 @@ class SaleOrder(models.Model):
 				else:
 					vals['name'] = company_code + '/' + vals['name']
 
-				print("vals(name,partner id)=====",vals['name'],vals['partner_id'])
+
 				#CREATE JOB
 				job_vals= {'name':vals['name'] , 'partner_id' : vals['partner_id'] , 'company_id':vals['company_id'] }
 
+				#check for any analytic group available for this period
+				analytic_group = self.env['account.analytic.group'].search([('start_date','<=',vals['date_order']),('end_date','>=',vals['date_order'])],limit=1)
+				analytic_group_id = analytic_group.id
+				print("Analytic_groupsss", analytic_group)
+				if analytic_group_id:
+					job_vals['group_id'] = analytic_group_id
 				analytic = self.env['account.analytic.account'].create(job_vals)
-				print('ANALYTIC============',analytic)
+
 				vals['analytic_account_id'] = analytic.id
 
 		# Makes sure partner_invoice_id', 'partner_shipping_id' and 'pricelist_id' are defined
